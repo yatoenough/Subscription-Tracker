@@ -11,7 +11,9 @@ import SwiftUI
 struct Subscription_TrackerApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationStack {
+                CalendarView()
+            }
         }
     }
 }
