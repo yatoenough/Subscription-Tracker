@@ -13,76 +13,105 @@ struct CalendarView: View {
     let currentDate = Date()
     
     var body: some View {
-        GeometryReader { geometry in
-            let cellSize = geometry.size.width / 7
-            VStack {
-                HStack {
-                    Text("Calendar")
-                        .font(.title)
-                    Spacer()
-                    Text("Monthly total: $59.99")
-                }
-                HStack {
-                    HStack {
-                        Circle()
-                            .fill(Color.red)
-                            .frame(width: 10, height: 10)
-                        Text("Monthly")
-                    }
-                    HStack {
-                        Circle()
-                            .fill(Color.blue)
-                            .frame(width: 10, height: 10)
-                        Text("Yearly")
-                    }
-                    Spacer()
-                }
-                VStack {
-                    HStack {
-                        ForEach(daysList, id: \.self) { day in
-                            Text(day)
-                                .fontWeight(.semibold)
-                                .frame(maxWidth: .infinity)
+        ZStack {
+            Color("Background")
+                .ignoresSafeArea()
+            ScrollView {
+                GeometryReader { geometry in
+                    let cellSize = geometry.size.width / 7
+                    
+                    VStack {
+                        Divider()
+                            .foregroundStyle(Color("PrimaryGray"))
+                        HStack {
+                            Text("October, 2024")
+                                .font(.title3)
+                                .bold()
+                            Spacer()
+                            Text("Monthly total:")
+                                .foregroundStyle(Color("InactiveText"))
+                            Text("$59.99")
+                        }.padding(.top)
+                        HStack {
+                            HStack {
+                                Circle()
+                                    .fill(Color.purple)
+                                    .frame(width: 10, height: 10)
+                                Text("Monthly")
+                                    .font(.subheadline)
+                            }
+                            HStack {
+                                Circle()
+                                    .fill(Color.blue)
+                                    .frame(width: 10, height: 10)
+                                Text("Yearly").font(.subheadline)
+                            }
+                            Spacer()
                         }
-                    }
-                    let days = generateDays(for: 11, year: 2024)
-                    LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), spacing: 1) {
-                        ForEach(days.indices, id: \.self) { index in
-                            if let day = days[index] {
-                                Text(day)
-                                    .frame(width: cellSize, height: cellSize)
-                                    .background(
+                        VStack {
+                            HStack {
+                                ForEach(daysList, id: \.self) { day in
+                                    Text(day.uppercased())
+                                        .foregroundStyle(Color("InactiveText"))
+                                        .fontWeight(.bold)
+                                        .frame(maxWidth: .infinity)
+                                    
+                                }
+                            }
+                            let days = generateDays(for: 2, year: 2024)
+                            LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), spacing: 1) {
+                                ForEach(days.indices, id: \.self) { index in
+                                    if let day = days[index] {
                                         RoundedRectangle(cornerRadius: 15)
-                                            .fill(Color.gray)
-                                    )
-                            } else {
-                                Spacer()
-                                    .frame(width: cellSize, height: cellSize)
+                                            .fill(Color("PrimaryGray"))
+                                            .overlay {
+                                                VStack {
+                                                    Spacer()
+                                                    Text(day)
+                                                        .font(.caption)
+                                                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
+                                                }
+                                            }
+                                            .frame(width: cellSize, height: cellSize)
+                                        
+                                    } else {
+                                        RoundedRectangle(cornerRadius: 15)
+                                            .fill(.clear)
+                                    }
+                                }
                             }
                         }
+                        .padding(.vertical)
                     }
-                    .frame(maxHeight: .infinity)
+                    .padding()
+                    .toolbar {
+                        ToolbarItemGroup(placement: .topBarLeading) {
+                            Button("Calendar") {
+                                print("Pressed")
+                            }
+                            .foregroundStyle(.white)
+                            .font(.title2)
+                            
+                            Button("List") {
+                                print("Pressed")
+                            }
+                            .foregroundStyle(Color("InactiveText"))
+                            .font(.title2)
+                        }
+                        ToolbarItemGroup(placement: .topBarTrailing) {
+                            Button(action: {
+                                print("Pressed")
+                            }, label: {
+                                Text("+")
+                                    .font(.title)
+                                    .foregroundStyle(.white)
+                            })
+                            
+                        }
+                    }
+                    Spacer()
                 }
-                .padding(.vertical)
             }
-            .padding()
-            .toolbar {
-                ToolbarItemGroup(placement: .topBarLeading) {
-                    Button("Calendar") {
-                        print("Pressed")
-                    }
-                    
-                    Button("List") {
-                        print("Pressed")
-                    }
-                }
-                ToolbarItemGroup(placement: .topBarTrailing) {
-                    Button("+") {
-                        print("Pressed")
-                    }
-                }
-            }
-            Spacer()
         }
     }
     
