@@ -15,7 +15,7 @@ struct CalendarView: View {
             HStack {
                 ForEach(daysList, id: \.self) { day in
                     Text(day.uppercased())
-                        .foregroundStyle(Color("InactiveText"))
+                        .foregroundStyle(Color(K.Colors.secondaryText))
                         .fontWeight(.bold)
                         .frame(maxWidth: .infinity)
                     

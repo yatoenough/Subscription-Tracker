@@ -12,7 +12,7 @@ struct Subscription_TrackerApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationStack {
-                ContentView()
+                CalendarScreenView()
             }.preferredColorScheme(.dark)
         }
     }

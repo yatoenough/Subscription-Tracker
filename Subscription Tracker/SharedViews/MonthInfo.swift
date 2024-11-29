@@ -21,7 +21,7 @@ struct MonthInfo: View {
                 .bold()
             Spacer()
             Text("Monthly total:")
-                .foregroundStyle(Color("InactiveText"))
+                .foregroundStyle(Color(K.Colors.secondaryText))
             Text(String(format: "%.2f", total))
         }
     }

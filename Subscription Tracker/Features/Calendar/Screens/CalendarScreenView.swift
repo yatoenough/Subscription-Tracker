@@ -7,15 +7,15 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct CalendarScreenView: View {
     var body: some View {
         ZStack {
-            Color("Background")
+            Color(K.Colors.background)
                 .ignoresSafeArea()
             ScrollView {
                 VStack {
                     Divider()
-                        .foregroundStyle(Color("PrimaryGray"))
+                        .foregroundStyle(Color(K.Colors.secondaryGray))
                     MonthInfo(month: 11, year: 2024, total: 23.45)
                         .padding(.top)
                     HStack {
@@ -38,7 +38,7 @@ struct ContentView: View {
                         Button("List") {
                             print("Pressed")
                         }
-                        .foregroundStyle(Color("InactiveText"))
+                        .foregroundStyle(Color(K.Colors.secondaryText))
                         .font(.title2)
                     }
                     ToolbarItemGroup(placement: .topBarTrailing) {
@@ -60,6 +60,6 @@ struct ContentView: View {
 
 #Preview {
     NavigationStack {
-        ContentView()
+        CalendarScreenView()
     }.preferredColorScheme(.dark)
 }
