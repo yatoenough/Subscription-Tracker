@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ContentView: View {
-    
     var body: some View {
         ZStack {
             Color("Background")
@@ -62,5 +61,5 @@ struct ContentView: View {
 #Preview {
     NavigationStack {
         ContentView()
-    }
+    }.preferredColorScheme(.dark)
 }

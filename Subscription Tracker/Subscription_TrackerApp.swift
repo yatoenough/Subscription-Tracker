@@ -13,7 +13,7 @@ struct Subscription_TrackerApp: App {
         WindowGroup {
             NavigationStack {
                 ContentView()
-            }
+            }.preferredColorScheme(.dark)
         }
     }
 }
