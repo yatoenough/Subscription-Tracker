@@ -8,6 +8,14 @@
 import SwiftUI
 
 struct CalendarScreenView: View {
+    let currentDate = Date()
+    let calendar = Calendar.current
+
+    var year: Int { calendar.component(.year, from: currentDate) }
+    var month: Int { calendar.component(.month, from: currentDate) }
+    var day: Int { calendar.component(.day, from: currentDate) }
+    
+    
     var body: some View {
         ZStack {
             Color(K.Colors.background)
@@ -16,14 +24,14 @@ struct CalendarScreenView: View {
                 VStack {
                     Divider()
                         .foregroundStyle(Color(K.Colors.secondaryGray))
-                    MonthInfo(month: 11, year: 2024, total: 23.45)
+                    MonthInfo(month: month, year: year, total: 23.45)
                         .padding(.top)
                     HStack {
-                        CalendarTrait(color: .purple, text: "Monthly")
-                        CalendarTrait(color: .red, text: "Yearly")
+                        CalendarTrait(color: .blue, text: "Yearly")
+                        CalendarTrait(color: .green, text: "Monthly")
                         Spacer()
                     }
-                    CalendarView()
+                    CalendarView(month: 10, year: 2024)
                         .padding(.vertical)
                 }
                 .padding()
@@ -56,6 +64,9 @@ struct CalendarScreenView: View {
             }
         }
     }
+    
+    
+    
 }
 
 #Preview {

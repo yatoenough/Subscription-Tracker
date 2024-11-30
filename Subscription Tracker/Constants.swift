@@ -9,7 +9,7 @@ struct K {
     struct Colors {
         static let background = "Background"
         static let secondaryText = "SecondaryText"
-        static let PrimaryGray = "PrimaryGray"
+        static let primaryGray = "PrimaryGray"
         static let secondaryGray = "SecondaryGray"
     }
 }

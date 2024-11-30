@@ -16,7 +16,7 @@ struct MonthInfo: View {
         let formattedYear = String(year).replacingOccurrences(of: " ", with: "")
         
         HStack {
-            Text("\(month), \(formattedYear)")
+            Text("\(monthName(month)), \(formattedYear)")
                 .font(.title3)
                 .bold()
             Spacer()
@@ -24,6 +24,11 @@ struct MonthInfo: View {
                 .foregroundStyle(Color(K.Colors.secondaryText))
             Text(String(format: "%.2f", total))
         }
+    }
+    
+    private func monthName(_ month: Int) -> String {
+        let formatter = DateFormatter()
+        return formatter.monthSymbols[month - 1]
     }
 }
 
