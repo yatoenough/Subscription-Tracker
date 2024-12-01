@@ -45,7 +45,7 @@ struct DayCell: View {
 
 #Preview {
     HStack {
-        DayCell(dayNumber: 13, subscription: Subscription(id: 1,name: "Test", price: 100, image: "spotify", type: SubscriptionTypes.yearly.getType()))
+        DayCell(dayNumber: 13, subscription: Subscription(id: 1,name: "Test", price: 100, image: "spotify", type: SubscriptionTypes.yearly.getType(), date: Date()))
             .preferredColorScheme(.dark)
         DayCell(dayNumber: 13, subscription: nil)
             .preferredColorScheme(.dark)

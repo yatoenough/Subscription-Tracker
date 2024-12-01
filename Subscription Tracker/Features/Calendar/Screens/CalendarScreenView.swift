@@ -15,7 +15,6 @@ struct CalendarScreenView: View {
     var month: Int { calendar.component(.month, from: currentDate) }
     var day: Int { calendar.component(.day, from: currentDate) }
     
-    
     var body: some View {
         ZStack {
             Color(K.Colors.background)

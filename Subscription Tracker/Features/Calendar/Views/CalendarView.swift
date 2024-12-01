@@ -12,6 +12,16 @@ struct CalendarView: View {
     let month: Int
     let year: Int
     
+    func createSpecificDate(year: Int, month: Int, day: Int) -> Date? {
+        var components = DateComponents()
+        components.year = year
+        components.month = month
+        components.day = day
+        
+        // Use the current calendar to create the date
+        return Calendar.current.date(from: components)
+    }
+    
     var body: some View {
         VStack {
             HStack {
@@ -24,8 +34,18 @@ struct CalendarView: View {
                 }
             }
             
+            #warning("Rewrite to MVVM")
             let days = daysInMonth(month: month, year: year)
             let firstWeekday = firstDayOfMonthMondayStart(month: month, year: year)
+            let subscriptions: [Subscription] = [
+                Subscription(id: 1, name: "Spotify", price: 10.99, image: "spotify", type: SubscriptionTypes.threeMonth.getType(), date: createSpecificDate(year: 2024, month: 12, day: 1)!),
+                Subscription(id: 2, name: "YouTube", price: 20.99, image: "spotify", type: SubscriptionTypes.weekly.getType(), date: createSpecificDate(year: 2024, month: 12, day: 6)!),
+                Subscription(id: 3, name: "ChatGPT", price: 11.00, image: "spotify", type: SubscriptionTypes.monthly.getType(), date: createSpecificDate(year: 2024, month: 12, day: 15)!),
+                Subscription(id: 4, name: "iCloud", price: 13.56, image: "spotify", type: SubscriptionTypes.yearly.getType(), date: createSpecificDate(year: 2024, month: 12, day: 21)!)
+            ]
+            
+            
+            
             
             let totalSlots = days + firstWeekday
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), spacing: 3) {
@@ -35,7 +55,18 @@ struct CalendarView: View {
                             .fill(Color.clear)
                             .frame(height: 40)
                     } else {
-                        DayCell(dayNumber: index - firstWeekday + 1, subscription: nil)
+                        #warning("Simplify code")
+                        let sub = subscriptions.filter({ sub in
+                            Calendar.current.component(.day, from: sub.date) == index - firstWeekday + 1
+                        })
+                        if sub.count > 1 {
+                            DayCell(dayNumber: index - firstWeekday + 1, subscription: sub.first)
+                        } else if sub.count == 1 {
+                            DayCell(dayNumber: index - firstWeekday + 1, subscription: sub.first)
+                        }
+                        else {
+                            DayCell(dayNumber: index - firstWeekday + 1, subscription: nil)
+                        }
                     }
                 }
             }

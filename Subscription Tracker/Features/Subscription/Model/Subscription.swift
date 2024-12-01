@@ -14,6 +14,7 @@ struct Subscription: Identifiable {
     let price: Double
     let image: String
     let type: SubscriptionType
+    let date: Date
 }
 
 struct SubscriptionType {
