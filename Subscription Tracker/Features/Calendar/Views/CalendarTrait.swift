@@ -15,7 +15,7 @@ struct CalendarTrait: View {
         HStack(spacing: 4) {
             Circle()
                 .fill(color)
-                .frame(width: 5, height: 5)
+                .frame(width: 8, height: 8)
             Text(text)
                 .font(.headline)
         }

@@ -38,10 +38,10 @@ struct CalendarView: View {
             let days = daysInMonth(month: month, year: year)
             let firstWeekday = firstDayOfMonthMondayStart(month: month, year: year)
             let subscriptions: [Subscription] = [
-                Subscription(id: 1, name: "Spotify", price: 10.99, image: "spotify", type: SubscriptionTypes.threeMonth.getType(), date: createSpecificDate(year: 2024, month: 12, day: 1)!),
-                Subscription(id: 2, name: "YouTube", price: 20.99, image: "spotify", type: SubscriptionTypes.weekly.getType(), date: createSpecificDate(year: 2024, month: 12, day: 6)!),
-                Subscription(id: 3, name: "ChatGPT", price: 11.00, image: "spotify", type: SubscriptionTypes.monthly.getType(), date: createSpecificDate(year: 2024, month: 12, day: 15)!),
-                Subscription(id: 4, name: "iCloud", price: 13.56, image: "spotify", type: SubscriptionTypes.yearly.getType(), date: createSpecificDate(year: 2024, month: 12, day: 21)!)
+                Subscription(id: 1, name: "Spotify", price: 10.99, type: SubscriptionTypes.threeMonth.getType(), date: createSpecificDate(year: 2024, month: 12, day: 1)!),
+                Subscription(id: 2, name: "YouTube", price: 20.99, type: SubscriptionTypes.weekly.getType(), date: createSpecificDate(year: 2024, month: 12, day: 6)!),
+                Subscription(id: 3, name: "ChatGPT", price: 11.00, type: SubscriptionTypes.monthly.getType(), date: createSpecificDate(year: 2024, month: 12, day: 6)!),
+                Subscription(id: 4, name: "iCloud", price: 13.56, type: SubscriptionTypes.yearly.getType(), date: createSpecificDate(year: 2024, month: 12, day: 21)!)
             ]
             
             
@@ -60,12 +60,12 @@ struct CalendarView: View {
                             Calendar.current.component(.day, from: sub.date) == index - firstWeekday + 1
                         })
                         if sub.count > 1 {
-                            DayCell(dayNumber: index - firstWeekday + 1, subscription: sub.first)
+                            DayCell(dayNumber: index - firstWeekday + 1, subscriptions: sub)
                         } else if sub.count == 1 {
-                            DayCell(dayNumber: index - firstWeekday + 1, subscription: sub.first)
+                            DayCell(dayNumber: index - firstWeekday + 1, subscriptions: sub)
                         }
                         else {
-                            DayCell(dayNumber: index - firstWeekday + 1, subscription: nil)
+                            DayCell(dayNumber: index - firstWeekday + 1, subscriptions: nil)
                         }
                     }
                 }

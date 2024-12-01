@@ -24,7 +24,9 @@ struct CalendarScreenView: View {
                     Divider()
                         .foregroundStyle(Color(K.Colors.secondaryGray))
                     MonthInfo(month: month, year: year, total: 23.45)
-                        .padding(.top)
+                        .padding(.vertical)
+                    Divider()
+                        .foregroundStyle(Color(K.Colors.secondaryGray))
                     HStack {
                         ForEach(SubscriptionTypes.allCases, id: \.self) { enumCase in
                             let type = enumCase.getType()
@@ -32,9 +34,8 @@ struct CalendarScreenView: View {
                             Spacer()
                         }
                         Spacer()
-                    }
+                    }.padding(.vertical)
                     CalendarView(month: 10, year: 2024)
-                        .padding(.vertical)
                 }
                 .padding()
                 .toolbar {
