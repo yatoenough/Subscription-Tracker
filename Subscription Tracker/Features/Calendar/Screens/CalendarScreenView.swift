@@ -26,8 +26,11 @@ struct CalendarScreenView: View {
                     MonthInfo(month: month, year: year, total: 23.45)
                         .padding(.top)
                     HStack {
-                        CalendarTrait(color: .blue, text: "Yearly")
-                        CalendarTrait(color: .green, text: "Monthly")
+                        ForEach(SubscriptionTypes.allCases, id: \.self) { enumCase in
+                            let type = enumCase.getType()
+                            CalendarTrait(color: type.color, text: type.value)
+                            Spacer()
+                        }
                         Spacer()
                     }
                     CalendarView(month: 10, year: 2024)

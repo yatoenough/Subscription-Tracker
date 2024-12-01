@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SwiftUI
 
 struct Subscription: Identifiable {
     let id: Int
@@ -15,29 +14,4 @@ struct Subscription: Identifiable {
     let image: String
     let type: SubscriptionType
     let date: Date
-}
-
-struct SubscriptionType {
-    let value: String
-    let color: Color
-}
-
-enum SubscriptionTypes {
-    case yearly
-    case monthly
-    case weekly
-    case threeMonth
-    
-    func getType() -> SubscriptionType {
-        switch self {
-        case .yearly:
-            return SubscriptionType(value: "Yearly", color: .purple)
-        case .monthly:
-            return SubscriptionType(value: "Monthly", color: .green)
-        case .weekly:
-            return SubscriptionType(value: "Weekly", color: .blue)
-        case .threeMonth:
-            return SubscriptionType(value: "3-Months", color: .orange)
-        }
-    }
 }
