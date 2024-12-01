@@ -23,6 +23,7 @@ struct DayCell: View {
                             .fill(subscription.type.color)
                             .frame(width: 20, height: 20)
                             
+                            
                     } else if subscriptions.count > 1 {
                         let count = subscriptions.count
                         let subscription = subscriptions.first!

@@ -19,10 +19,15 @@ struct DayDetails: View {
                     Spacer()
                     Text(String(format: "%.2f", subscription.price))
                 }.padding()
-                .background {
-                    RoundedRectangle(cornerRadius: 10)
-                        .fill(subscription.type.color.opacity(0.2))
-                }
+                    .background {
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color(K.Colors.secondaryGray))
+                            .shadow(color:subscription.type.color.opacity(0.3) ,radius: 10, x: 0, y: 10)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(subscription.type.color.opacity(0.4), lineWidth: 1)
+                            )
+                    }
             }.padding()
             Spacer()
         }
