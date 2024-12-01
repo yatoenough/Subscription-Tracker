@@ -35,7 +35,7 @@ struct CalendarView: View {
                             .fill(Color.clear)
                             .frame(height: 40)
                     } else {
-                        DayCell(dayNumber: index - firstWeekday + 1, image: nil)
+                        DayCell(dayNumber: index - firstWeekday + 1, subscription: nil)
                     }
                 }
             }
