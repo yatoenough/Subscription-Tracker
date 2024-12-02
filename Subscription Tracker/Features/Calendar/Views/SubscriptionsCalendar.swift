@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftData
 
-struct CalendarView: View {
+struct SubscriptionsCalendar: View {
     let daysList: [String] = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
     let month: Int
     let year: Int
@@ -91,7 +91,7 @@ struct CalendarView: View {
 }
 
 #Preview {
-    CalendarView(month: 11, year: 2024, subscriptions: [])
+    SubscriptionsCalendar(month: 11, year: 2024, subscriptions: [])
         .padding()
         .preferredColorScheme(.dark)
 }

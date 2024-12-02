@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MonthInfo: View {
+struct MonthTotalInfo: View {
     let month: Int
     let year: Int
     let total: Double
@@ -33,5 +33,5 @@ struct MonthInfo: View {
 }
 
 #Preview {
-    MonthInfo(month: 11, year: 2024, total: 59.33)
+    MonthTotalInfo(month: 11, year: 2024, total: 59.33)
 }

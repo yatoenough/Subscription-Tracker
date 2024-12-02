@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftData
 
-struct CalendarScreenView: View {
+struct CalendarView: View {
     let currentDate = Date()
     let calendar = Calendar.current
     
@@ -17,9 +17,8 @@ struct CalendarScreenView: View {
     var day: Int { calendar.component(.day, from: currentDate) }
     
     @Environment(SubscriptionsViewModel.self) var subsViewModel: SubscriptionsViewModel
-    
     var subscriptions: [Subscription] {
-        subsViewModel.getSubscriptions()
+        subsViewModel.getSubscriptions(for: currentDate)
     }
     
     var body: some View {
@@ -30,7 +29,7 @@ struct CalendarScreenView: View {
                 VStack {
                     Divider()
                         .foregroundStyle(Color(K.Colors.secondaryGray))
-                    MonthInfo(month: month, year: year, total: 23.45)
+                    MonthTotalInfo(month: month, year: year, total: 23.45)
                         .padding(.vertical)
                     Divider()
                         .foregroundStyle(Color(K.Colors.secondaryGray))
@@ -42,7 +41,7 @@ struct CalendarScreenView: View {
                         }
                         Spacer()
                     }.padding(.vertical)
-                    CalendarView(month: 10, year: 2024, subscriptions: subscriptions)
+                    SubscriptionsCalendar(month: 10, year: 2024, subscriptions: subscriptions)
                 }
                 .padding()
                 .toolbar {
@@ -81,7 +80,7 @@ struct CalendarScreenView: View {
         let container = try! ModelContainer(for: Subscription.self, configurations: config)
         
         return NavigationStack {
-            CalendarScreenView()
+            CalendarView()
         }
         .preferredColorScheme(.dark)
         .modelContainer(container)
