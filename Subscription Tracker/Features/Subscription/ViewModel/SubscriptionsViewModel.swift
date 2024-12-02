@@ -9,7 +9,6 @@ import Foundation
 import SwiftData
 
 @Observable
-@MainActor
 class SubscriptionsViewModel {
     var modelContext: ModelContext
     
