@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct CalendarScreenView: View {
     let currentDate = Date()
@@ -72,7 +73,18 @@ struct CalendarScreenView: View {
 }
 
 #Preview {
-    NavigationStack {
-        CalendarScreenView()
-    }.preferredColorScheme(.dark)
+    do {
+        let config = ModelConfiguration(isStoredInMemoryOnly: true)
+        let container = try! ModelContainer(for: Subscription.self, configurations: config)
+        
+        return NavigationStack {
+            CalendarScreenView()
+        }
+        .preferredColorScheme(.dark)
+        .modelContainer(container)
+        .environment(SubscriptionsViewModel(modelContext: container.mainContext))
+        
+    } catch {
+        fatalError("Failed to create model container.")
+    }
 }

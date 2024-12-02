@@ -13,7 +13,7 @@ import SwiftData
 class SubscriptionsViewModel {
     var modelContext: ModelContext
     
-    init (modelContext: ModelContext) {
+    init(modelContext: ModelContext) {
         self.modelContext = modelContext
     }
     
