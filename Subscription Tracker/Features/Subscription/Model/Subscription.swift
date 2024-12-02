@@ -6,11 +6,21 @@
 //
 
 import Foundation
+import SwiftData
 
-struct Subscription: Identifiable {
-    let id: Int
-    let name: String
-    let price: Double
-    let type: SubscriptionType
-    let date: Date
+@Model
+class Subscription {
+    var id: Int
+    var name: String
+    var price: Double
+    @Relationship(deleteRule: .noAction) var type: SubscriptionType
+    var date: Date
+    
+    init(id: Int, name: String, price: Double, type: SubscriptionType, date: Date) {
+        self.id = id
+        self.name = name
+        self.price = price
+        self.type = type
+        self.date = date
+    }
 }

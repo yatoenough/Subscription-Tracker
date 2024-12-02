@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct Subscription_TrackerApp: App {
@@ -15,5 +16,6 @@ struct Subscription_TrackerApp: App {
                 CalendarScreenView()
             }.preferredColorScheme(.dark)
         }
+        .modelContainer(for: Subscription.self)
     }
 }
