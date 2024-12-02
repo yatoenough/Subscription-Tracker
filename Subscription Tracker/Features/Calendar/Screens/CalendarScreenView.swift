@@ -15,6 +15,8 @@ struct CalendarScreenView: View {
     var month: Int { calendar.component(.month, from: currentDate) }
     var day: Int { calendar.component(.day, from: currentDate) }
     
+    @Environment(SubscriptionsViewModel.self) var subsViewModel: SubscriptionsViewModel
+    
     var body: some View {
         ZStack {
             Color(K.Colors.background)
@@ -54,7 +56,7 @@ struct CalendarScreenView: View {
                     }
                     ToolbarItemGroup(placement: .topBarTrailing) {
                         Button(action: {
-                            print("Pressed")
+                            subsViewModel.addSamples()
                         }, label: {
                             Text("+")
                                 .font(.title)

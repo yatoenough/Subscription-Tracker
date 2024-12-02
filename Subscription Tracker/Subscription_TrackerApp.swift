@@ -10,12 +10,26 @@ import SwiftData
 
 @main
 struct Subscription_TrackerApp: App {
+    let container: ModelContainer
+    let subsViewModel: SubscriptionsViewModel
+    
+    init() {
+        do {
+            container = try ModelContainer(for: Subscription.self)
+        } catch {
+            fatalError("Failed to create ModelContainer for Movie.")
+        }
+        
+        subsViewModel = .init(modelContext: container.mainContext)
+    }
+    
     var body: some Scene {
         WindowGroup {
             NavigationStack {
                 CalendarScreenView()
             }.preferredColorScheme(.dark)
         }
-        .modelContainer(for: Subscription.self)
+        .modelContainer(container)
+        .environment(subsViewModel)
     }
 }

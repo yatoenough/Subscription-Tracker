@@ -11,7 +11,7 @@ struct DayDetails: View {
     let subscriptions: [Subscription]
     
     var body: some View {
-        VStack {
+        ScrollView {
             ForEach(subscriptions) { subscription in
                 HStack {
                     Text(subscription.name)
@@ -22,10 +22,10 @@ struct DayDetails: View {
                     .background {
                         RoundedRectangle(cornerRadius: 10)
                             .fill(Color(K.Colors.secondaryGray))
-                            .shadow(color:subscription.type.color.opacity(0.3) ,radius: 10, x: 0, y: 10)
+                            .shadow(color: .blue.opacity(0.3) ,radius: 10, x: 0, y: 10)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 8)
-                                    .stroke(subscription.type.color.opacity(0.4), lineWidth: 1)
+                                    .stroke(.blue.opacity(0.4), lineWidth: 1)
                             )
                     }
             }.padding()
@@ -35,6 +35,6 @@ struct DayDetails: View {
 }
 
 #Preview {
-    DayDetails(subscriptions: [Subscription(id: 1,name: "Test", price: 100, type: SubscriptionTypes.yearly.getType(), date: Date()), Subscription(id: 1,name: "Test", price: 100, type: SubscriptionTypes.yearly.getType(), date: Date())])
+    DayDetails(subscriptions: [Subscription(id: 1,name: "Test", price: 100, date: Date()), Subscription(id: 1,name: "Test", price: 100, date: Date())])
         .preferredColorScheme(.dark)
 }

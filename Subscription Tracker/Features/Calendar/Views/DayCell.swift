@@ -18,24 +18,25 @@ struct DayCell: View {
             VStack {
                 if let subscriptions {
 
-                    if subscriptions.count == 1, let subscription = subscriptions.first {
+                    if subscriptions.count == 1, let _ = subscriptions.first {
                         Circle()
-                            .fill(subscription.type.color)
+                            .fill(.blue)
                             .frame(width: 20, height: 20)
                             
                             
                     } else if subscriptions.count > 1 {
                         let count = subscriptions.count
-                        let subscription = subscriptions.first!
+                        
                         Circle()
-                            .fill(subscription.type.color)
-                            .frame(width: 20, height: 20)
+                            .fill(.blue)
+                            .frame(width: 25, height: 25)
                             .overlay {
                                 Circle()
                                     .fill(Color(K.Colors.primaryGray))
                                     .overlay {
                                         Text("+\(count-1)")
-                                            .font(.caption)
+                                            .font(.caption2)
+                                            .scaledToFit()
                                             .bold()
                                         
                                     }.offset(x: 5, y: 0)
@@ -74,8 +75,8 @@ struct DayCell: View {
 
 #Preview {
     HStack {
-        DayCell(dayNumber: 13, subscriptions: [Subscription(id: 1,name: "Test", price: 100, type: SubscriptionTypes.yearly.getType(), date: Date()), Subscription(id: 1,name: "Test", price: 100, type: SubscriptionTypes.yearly.getType(), date: Date())])
-        DayCell(dayNumber: 13, subscriptions: [Subscription(id: 1,name: "Test", price: 100, type: SubscriptionTypes.yearly.getType(), date: Date())])
+        DayCell(dayNumber: 13, subscriptions: [Subscription(id: 1,name: "Test", price: 100, date: Date()), Subscription(id: 1,name: "Test", price: 100, date: Date())])
+        DayCell(dayNumber: 13, subscriptions: [Subscription(id: 1,name: "Test", price: 100, date: Date())])
         DayCell(dayNumber: 13, subscriptions: nil)
         
     }.preferredColorScheme(.dark)
