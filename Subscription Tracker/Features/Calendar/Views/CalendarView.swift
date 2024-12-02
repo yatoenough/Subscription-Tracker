@@ -13,7 +13,7 @@ struct CalendarView: View {
     let month: Int
     let year: Int
     
-    @Query var subscriptions: [Subscription]
+    var subscriptions: [Subscription]
 
     func createSpecificDate(year: Int, month: Int, day: Int) -> Date? {
         var components = DateComponents()
@@ -91,7 +91,7 @@ struct CalendarView: View {
 }
 
 #Preview {
-    CalendarView(month: 11, year: 2024)
+    CalendarView(month: 11, year: 2024, subscriptions: [])
         .padding()
         .preferredColorScheme(.dark)
 }

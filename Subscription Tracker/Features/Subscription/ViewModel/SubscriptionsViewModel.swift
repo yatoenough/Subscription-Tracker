@@ -17,7 +17,16 @@ class SubscriptionsViewModel {
         self.modelContext = modelContext
     }
     
-    func addSamples() {
-        modelContext.insert(Subscription(id: 1, name: "Test", price: 100, date: Date()))
+    func getSubscriptions() -> [Subscription] {
+        let fetchDescriptor = FetchDescriptor<Subscription>()
+        var subscriptions: [Subscription] = []
+
+        do {
+            subscriptions = try modelContext.fetch(fetchDescriptor)
+        } catch {
+            print("Failed to load Subscriptions.")
+        }
+        
+        return subscriptions
     }
 }

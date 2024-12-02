@@ -18,6 +18,10 @@ struct CalendarScreenView: View {
     
     @Environment(SubscriptionsViewModel.self) var subsViewModel: SubscriptionsViewModel
     
+    var subscriptions: [Subscription] {
+        subsViewModel.getSubscriptions()
+    }
+    
     var body: some View {
         ZStack {
             Color(K.Colors.background)
@@ -38,7 +42,7 @@ struct CalendarScreenView: View {
                         }
                         Spacer()
                     }.padding(.vertical)
-                    CalendarView(month: 10, year: 2024)
+                    CalendarView(month: 10, year: 2024, subscriptions: subscriptions)
                 }
                 .padding()
                 .toolbar {
@@ -57,7 +61,6 @@ struct CalendarScreenView: View {
                     }
                     ToolbarItemGroup(placement: .topBarTrailing) {
                         Button(action: {
-                            subsViewModel.addSamples()
                         }, label: {
                             Text("+")
                                 .font(.title)
