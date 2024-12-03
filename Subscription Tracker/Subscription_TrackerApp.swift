@@ -15,7 +15,23 @@ struct Subscription_TrackerApp: App {
     
     init() {
         do {
-            container = try ModelContainer(for: Subscription.self)
+            let subscriptionConfig = ModelConfiguration(for: Subscription.self)
+            let subscriptionTypesConfig = ModelConfiguration(
+                for: SubscriptionType.self,
+                isStoredInMemoryOnly: true
+            )
+            
+            container = try ModelContainer(
+                for: Subscription.self, SubscriptionType.self,
+                configurations: subscriptionConfig, subscriptionTypesConfig
+            )
+            try container.mainContext.delete(model: SubscriptionType.self)
+            
+            for typeCase in DefaultSubscriptionTypes.allCases {
+                let type = typeCase.getValue()
+                container.mainContext.insert(type)
+            }
+            try container.mainContext.save()
         } catch {
             fatalError("Failed to create ModelContainer.")
         }

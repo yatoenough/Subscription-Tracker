@@ -16,11 +16,12 @@ struct DayCell: View {
     var body: some View {
         ZStack {
             VStack {
-                if let subscriptions {
+                if let subscriptions, !subscriptions.isEmpty {
                     let count = subscriptions.count
+                    let firstSubscription = subscriptions.first!
                     
                     Circle()
-                        .fill(.blue)
+                        .fill(Color(hex: firstSubscription.type.colorHex))
                         .frame(width: 25, height: 25)
                         .overlay {
                             if count > 1 {
@@ -72,11 +73,13 @@ struct DayCell: View {
 #Preview {
     HStack {
         DayCell(dayNumber: 13, subscriptions: [
-            Subscription(id: 1,name: "Test", price: 100, date: Date()),
-            Subscription(id: 1,name: "Test", price: 100, date: Date())
+            Subscription(name: "Test", price: 100, type: DefaultSubscriptionTypes.monthly.getValue(), date: Date()),
+            Subscription(name: "Test", price: 100, type: DefaultSubscriptionTypes.monthly.getValue(), date: Date())
         ])
         
-        DayCell(dayNumber: 13, subscriptions: [Subscription(id: 1,name: "Test", price: 100, date: Date())])
+        DayCell(dayNumber: 13, subscriptions: [
+            Subscription(name: "Test", price: 100, type: DefaultSubscriptionTypes.monthly.getValue(), date: Date())
+        ])
         
         DayCell(dayNumber: 13, subscriptions: nil)
         

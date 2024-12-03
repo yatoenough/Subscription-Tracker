@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftData
+import SwiftUI
 
 @Observable
 class SubscriptionsViewModel {
@@ -14,6 +15,16 @@ class SubscriptionsViewModel {
     
     init(modelContext: ModelContext) {
         self.modelContext = modelContext
+    }
+    
+    func addSubscription(_ subscription: Subscription) {
+        do {
+            modelContext.insert(subscription)
+            #warning("FIXME: Crashing when saving subscription.")
+//            try modelContext.save()
+        } catch {
+            print("Failed to save subscription.")
+        }
     }
     
     func getSubscriptions() -> [Subscription] {

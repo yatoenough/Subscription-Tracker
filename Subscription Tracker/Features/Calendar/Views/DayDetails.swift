@@ -22,10 +22,10 @@ struct DayDetails: View {
                     .background {
                         RoundedRectangle(cornerRadius: 10)
                             .fill(Color(K.Colors.secondaryGray))
-                            .shadow(color: .blue.opacity(0.3) ,radius: 10, x: 0, y: 10)
+                            .shadow(color: Color(hex: subscription.type.colorHex).opacity(0.3) ,radius: 10, x: 0, y: 10)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 8)
-                                    .stroke(.blue.opacity(0.4), lineWidth: 1)
+                                    .stroke(Color(hex: subscription.type.colorHex).opacity(0.4), lineWidth: 1)
                             )
                     }
             }.padding()
@@ -36,8 +36,8 @@ struct DayDetails: View {
 
 #Preview {
     DayDetails(subscriptions: [
-        Subscription(id: 1,name: "Test", price: 100, date: Date()),
-        Subscription(id: 1,name: "Test", price: 100, date: Date())
+        Subscription(name: "Test", price: 100, type: DefaultSubscriptionTypes.monthly.getValue(),date: Date()),
+        Subscription(name: "Test", price: 100, type: DefaultSubscriptionTypes.monthly.getValue(), date: Date())
     ])
     .preferredColorScheme(.dark)
 }
