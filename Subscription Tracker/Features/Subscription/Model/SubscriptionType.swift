@@ -12,13 +12,13 @@ struct SubscriptionType {
     let color: Color
 }
 
-enum SubscriptionTypes: CaseIterable {
+enum DefaultSubscriptionTypes: CaseIterable {
     case yearly
     case monthly
     case weekly
     case threeMonth
     
-    func getType() -> SubscriptionType {
+    func getValue() -> SubscriptionType {
         switch self {
         case .yearly:
             return SubscriptionType(value: "Yearly", color: .purple)

@@ -14,16 +14,6 @@ struct SubscriptionsCalendar: View {
     let year: Int
     
     var subscriptions: [Subscription]
-
-    func createSpecificDate(year: Int, month: Int, day: Int) -> Date? {
-        var components = DateComponents()
-        components.year = year
-        components.month = month
-        components.day = day
-        
-        // Use the current calendar to create the date
-        return Calendar.current.date(from: components)
-    }
     
     var body: some View {
         VStack {
@@ -48,18 +38,19 @@ struct SubscriptionsCalendar: View {
                             .fill(Color.clear)
                             .frame(height: 40)
                     } else {
-                        #warning("Simplify code")
-                        let sub = subscriptions.filter({ sub in
+                        let filteredSubscriptions = subscriptions.filter({ sub in
                             Calendar.current.component(.day, from: sub.date) == index - firstWeekday + 1
                         })
-                        if sub.count > 1 {
-                            DayCell(dayNumber: index - firstWeekday + 1, subscriptions: sub)
-                        } else if sub.count == 1 {
-                            DayCell(dayNumber: index - firstWeekday + 1, subscriptions: sub)
+                        
+                        if filteredSubscriptions.count > 1 {
+                            DayCell(dayNumber: index - firstWeekday + 1, subscriptions: filteredSubscriptions)
+                        } else if filteredSubscriptions.count == 1 {
+                            DayCell(dayNumber: index - firstWeekday + 1, subscriptions: filteredSubscriptions)
                         }
                         else {
                             DayCell(dayNumber: index - firstWeekday + 1, subscriptions: nil)
                         }
+                        
                     }
                 }
             }

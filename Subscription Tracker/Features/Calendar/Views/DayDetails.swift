@@ -35,6 +35,9 @@ struct DayDetails: View {
 }
 
 #Preview {
-    DayDetails(subscriptions: [Subscription(id: 1,name: "Test", price: 100, date: Date()), Subscription(id: 1,name: "Test", price: 100, date: Date())])
-        .preferredColorScheme(.dark)
+    DayDetails(subscriptions: [
+        Subscription(id: 1,name: "Test", price: 100, date: Date()),
+        Subscription(id: 1,name: "Test", price: 100, date: Date())
+    ])
+    .preferredColorScheme(.dark)
 }

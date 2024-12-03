@@ -17,20 +17,13 @@ struct DayCell: View {
         ZStack {
             VStack {
                 if let subscriptions {
-
-                    if subscriptions.count == 1, let _ = subscriptions.first {
-                        Circle()
-                            .fill(.blue)
-                            .frame(width: 20, height: 20)
-                            
-                            
-                    } else if subscriptions.count > 1 {
-                        let count = subscriptions.count
-                        
-                        Circle()
-                            .fill(.blue)
-                            .frame(width: 25, height: 25)
-                            .overlay {
+                    let count = subscriptions.count
+                    
+                    Circle()
+                        .fill(.blue)
+                        .frame(width: 25, height: 25)
+                        .overlay {
+                            if count > 1 {
                                 Circle()
                                     .fill(Color(K.Colors.primaryGray))
                                     .overlay {
@@ -40,8 +33,11 @@ struct DayCell: View {
                                             .bold()
                                         
                                     }.offset(x: 5, y: 0)
+                            } else {
+                                EmptyView()
                             }
-                    }
+                        }
+                    
                 } else {
                     Rectangle()
                         .fill(.clear)
@@ -57,7 +53,7 @@ struct DayCell: View {
                 RoundedRectangle(cornerRadius: 15)
                     .fill(Color(K.Colors.secondaryGray))
             )
-            .gesture (
+            .gesture(
                 TapGesture()
                     .onEnded {
                         dayInfoModalPresented.toggle()
@@ -75,8 +71,13 @@ struct DayCell: View {
 
 #Preview {
     HStack {
-        DayCell(dayNumber: 13, subscriptions: [Subscription(id: 1,name: "Test", price: 100, date: Date()), Subscription(id: 1,name: "Test", price: 100, date: Date())])
+        DayCell(dayNumber: 13, subscriptions: [
+            Subscription(id: 1,name: "Test", price: 100, date: Date()),
+            Subscription(id: 1,name: "Test", price: 100, date: Date())
+        ])
+        
         DayCell(dayNumber: 13, subscriptions: [Subscription(id: 1,name: "Test", price: 100, date: Date())])
+        
         DayCell(dayNumber: 13, subscriptions: nil)
         
     }.preferredColorScheme(.dark)

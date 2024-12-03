@@ -11,16 +11,16 @@ import SwiftData
 @main
 struct Subscription_TrackerApp: App {
     let container: ModelContainer
-    let subsViewModel: SubscriptionsViewModel
+    let subscriptionsViewModel: SubscriptionsViewModel
     
     init() {
         do {
             container = try ModelContainer(for: Subscription.self)
         } catch {
-            fatalError("Failed to create ModelContainer for Movie.")
+            fatalError("Failed to create ModelContainer.")
         }
         
-        subsViewModel = .init(modelContext: container.mainContext)
+        subscriptionsViewModel = .init(modelContext: container.mainContext)
     }
     
     var body: some Scene {
@@ -30,6 +30,6 @@ struct Subscription_TrackerApp: App {
             }.preferredColorScheme(.dark)
         }
         .modelContainer(container)
-        .environment(subsViewModel)
+        .environment(subscriptionsViewModel)
     }
 }
