@@ -20,8 +20,7 @@ class SubscriptionsViewModel {
     func addSubscription(_ subscription: Subscription) {
         do {
             modelContext.insert(subscription)
-            #warning("FIXME: Crashing when saving subscription.")
-//            try modelContext.save()
+            try modelContext.save()
         } catch {
             print("Failed to save subscription.")
         }

@@ -60,7 +60,7 @@ struct CalendarView: View {
                     }
                     ToolbarItemGroup(placement: .topBarTrailing) {
                         Button(action: {
-                            subscriptionsViewModel.addSubscription(Subscription(name: "Test", price: 23, type: defaultSubscriptionTypes.first!, date: Date()))
+                            subscriptionsViewModel.addSubscription(Subscription(name: "Test", price: 23, type: defaultSubscriptionTypes.last!, date: Date()))
                         }, label: {
                             Text("+")
                                 .font(.title)
