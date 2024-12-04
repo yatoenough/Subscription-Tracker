@@ -32,6 +32,6 @@ struct MonthTotalInfo: View {
     }
 }
 
-#Preview {
+#Preview(traits: .sizeThatFitsLayout) {
     MonthTotalInfo(month: 11, year: 2024, total: 59.33)
 }

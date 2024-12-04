@@ -71,7 +71,7 @@ struct DayCell: View {
 
 
 
-#Preview {
+#Preview(traits: .sizeThatFitsLayout) {
     HStack {
         DayCell(dayNumber: 13, subscriptions: [
             Subscription(name: "Test", price: 100, type: DefaultSubscriptionTypes.monthly.getValue(), date: Date()),

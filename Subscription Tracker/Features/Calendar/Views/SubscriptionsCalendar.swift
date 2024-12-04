@@ -81,7 +81,7 @@ struct SubscriptionsCalendar: View {
     }
 }
 
-#Preview {
+#Preview(traits: .sizeThatFitsLayout) {
     SubscriptionsCalendar(month: 11, year: 2024, subscriptions: [])
         .padding()
         .preferredColorScheme(.dark)

@@ -23,6 +23,6 @@ struct CalendarTrait: View {
 }
 
 
-#Preview {
+#Preview(traits: .sizeThatFitsLayout) {
     CalendarTrait(color: .purple, text: "Text")
 }
