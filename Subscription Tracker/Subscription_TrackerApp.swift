@@ -19,19 +19,16 @@ struct Subscription_TrackerApp: App {
                 for: Subscription.self, SubscriptionType.self
             )
             
-            if !UserDefaults.standard.bool(forKey: "firstLaunch") {
+            let isFirstLaunch = !UserDefaults.standard.bool(forKey: "firstLaunch")
+            
+            if isFirstLaunch {
                 UserDefaults.standard.set(true, forKey: "firstLaunch")
                 for typeCase in DefaultSubscriptionTypes.allCases {
                     let type = typeCase.getValue()
                     container.mainContext.insert(type)
                 }
             }
-            
-            
             try container.mainContext.save()
-            
-            
-            
             
         } catch {
             fatalError("Failed to create ModelContainer.")

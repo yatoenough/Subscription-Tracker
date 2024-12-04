@@ -13,7 +13,7 @@ class SubscriptionType {
     @Attribute(.unique) var id: UUID = UUID()
     var value: String
     var colorHex: String
-    @Relationship(deleteRule: .noAction, inverse: \Subscription.type) var subsciptions: [Subscription]?
+    @Relationship(deleteRule: .cascade, inverse: \Subscription.type) var subsciptions: [Subscription]?
     
     init(value: String, colorHex: String) {
         self.value = value

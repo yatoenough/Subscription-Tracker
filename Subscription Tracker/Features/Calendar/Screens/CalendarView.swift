@@ -41,7 +41,7 @@ struct CalendarView: View {
                         }
                     }
         
-                    SubscriptionsCalendar(month: 10, year: 2024, subscriptions: subscriptions)
+                    SubscriptionsCalendar(month: month, year: year, subscriptions: subscriptions)
                 }
                 .padding()
                 .toolbar {
