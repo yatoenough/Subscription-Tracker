@@ -9,15 +9,9 @@ import SwiftUI
 import SwiftData
 
 struct CalendarView: View {
-    let currentDate = Date()
-    let calendar = Calendar.current
-    
-    var year: Int { calendar.component(.year, from: currentDate) }
-    var month: Int { calendar.component(.month, from: currentDate) }
-    var day: Int { calendar.component(.day, from: currentDate) }
+    @Environment(SubscriptionsViewModel.self) var subscriptionsViewModel: SubscriptionsViewModel
     
     @Query(sort: \SubscriptionType.value) var defaultSubscriptionTypes: [SubscriptionType]
-    @Environment(SubscriptionsViewModel.self) var subscriptionsViewModel: SubscriptionsViewModel
     var subscriptions: [Subscription] { subscriptionsViewModel.getSubscriptions() }
     
     var body: some View {
@@ -29,7 +23,7 @@ struct CalendarView: View {
                     Divider()
                         .foregroundStyle(Color(K.Colors.secondaryGray))
                     
-                    MonthTotalInfo(month: month, year: year, total: 23.45)
+                    MonthTotalInfo(total: 23.45)
                         .padding(.vertical)
                     
                     Divider()
@@ -41,7 +35,7 @@ struct CalendarView: View {
                         }
                     }
         
-                    SubscriptionsCalendar(month: month, year: year, subscriptions: subscriptions)
+                    SubscriptionsCalendar(subscriptions: subscriptions)
                 }
                 .padding()
                 .toolbar {
@@ -89,4 +83,5 @@ struct CalendarView: View {
     .preferredColorScheme(.dark)
     .modelContainer(container)
     .environment(SubscriptionsViewModel(modelContext: container.mainContext))
+    .environment(CalendarViewModel(.now))
 }

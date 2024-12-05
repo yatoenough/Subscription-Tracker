@@ -10,15 +10,13 @@ import SwiftUI
 struct DayDetails: View {
     let subscriptions: [Subscription]
     
-    let day: Int
-    let month: Int
-    let year: Int
+    @Environment(CalendarViewModel.self) var calendarViewModel: CalendarViewModel
     
     var body: some View {
-        let formattedYear = String(year).replacingOccurrences(of: " ", with: "")
+        let formattedYear = String(calendarViewModel.year).replacingOccurrences(of: " ", with: "")
         ScrollView {
             HStack {
-                Text("\(day), \(monthName(month)) \(formattedYear)")
+                Text("\(calendarViewModel.day), \(calendarViewModel.monthName(calendarViewModel.month)) \(formattedYear)")
                     .font(.largeTitle)
                     .bold()
                     .padding()
@@ -63,17 +61,13 @@ struct DayDetails: View {
             Spacer()
         }
     }
-    
-    private func monthName(_ month: Int) -> String {
-        let formatter = DateFormatter()
-        return formatter.monthSymbols[month - 1]
-    }
 }
 
 #Preview {
     DayDetails(subscriptions: [
         Subscription(name: "Test", price: 100, type: DefaultSubscriptionTypes.monthly.getValue(),date: Date()),
         Subscription(name: "Test", price: 100, type: DefaultSubscriptionTypes.monthly.getValue(), date: Date())
-    ], day: 4, month: 12, year: 2024)
+    ])
     .preferredColorScheme(.dark)
+    .environment(CalendarViewModel(.now))
 }

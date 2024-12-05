@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct MonthTotalInfo: View {
-    let month: Int
-    let year: Int
     let total: Double
     
+    @Environment(CalendarViewModel.self) var calendarViewModel: CalendarViewModel
+    
     var body: some View {
-        let formattedYear = String(year).replacingOccurrences(of: " ", with: "")
+        let formattedYear = String(calendarViewModel.year).replacingOccurrences(of: " ", with: "")
         
         HStack {
-            Text("\(monthName(month)), \(formattedYear)")
+            Text("\(calendarViewModel.monthName(calendarViewModel.month)), \(formattedYear)")
                 .font(.title3)
                 .bold()
             Spacer()
@@ -25,13 +25,9 @@ struct MonthTotalInfo: View {
             Text(String(format: "%.2f", total))
         }
     }
-    
-    private func monthName(_ month: Int) -> String {
-        let formatter = DateFormatter()
-        return formatter.monthSymbols[month - 1]
-    }
 }
 
 #Preview(traits: .sizeThatFitsLayout) {
-    MonthTotalInfo(month: 11, year: 2024, total: 59.33)
+    MonthTotalInfo(total: 59.33)
+        .environment(CalendarViewModel(.now))
 }

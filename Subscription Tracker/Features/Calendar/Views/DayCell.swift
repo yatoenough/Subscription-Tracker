@@ -62,8 +62,7 @@ struct DayCell: View {
             )
         }.sheet(isPresented: $dayInfoModalPresented) {
             if let subscriptions {
-                #warning("Refactore to date provider")
-                DayDetails(subscriptions: subscriptions, day: dayNumber, month: 12, year: 2024)
+                DayDetails(subscriptions: subscriptions)
             }
         }
     }

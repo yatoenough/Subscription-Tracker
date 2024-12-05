@@ -10,10 +10,9 @@ import SwiftData
 
 struct SubscriptionsCalendar: View {
     let daysList: [String] = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-    let month: Int
-    let year: Int
-    
     var subscriptions: [Subscription]
+    
+    @Environment(CalendarViewModel.self) var calendarViewModel: CalendarViewModel
     
     var body: some View {
         VStack {
@@ -27,8 +26,8 @@ struct SubscriptionsCalendar: View {
                 }
             }
             
-            let days = daysInMonth(month: month, year: year)
-            let firstWeekday = firstDayOfMonthMondayStart(month: month, year: year)
+            let days = calendarViewModel.daysInMonth(month: calendarViewModel.month, year: calendarViewModel.year)
+            let firstWeekday = calendarViewModel.firstDayOfMonthStartingMonday(month: calendarViewModel.month, year: calendarViewModel.year)
             
             let totalSlots = days + firstWeekday
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), spacing: 3) {
@@ -57,32 +56,12 @@ struct SubscriptionsCalendar: View {
         }
     }
     
-    private func daysInMonth(month: Int, year: Int) -> Int {
-        var dateComponents = DateComponents()
-        dateComponents.month = month
-        dateComponents.year = year
-        
-        let calendar = Calendar.current
-        let date = calendar.date(from: dateComponents)!
-        return calendar.range(of: .day, in: .month, for: date)!.count
-    }
     
-    private func firstDayOfMonthMondayStart(month: Int, year: Int) -> Int {
-        var dateComponents = DateComponents()
-        dateComponents.month = month
-        dateComponents.year = year
-        dateComponents.day = 1
-        
-        let calendar = Calendar.current
-        let date = calendar.date(from: dateComponents)!
-        let weekday = calendar.component(.weekday, from: date)
-        
-        return (weekday == 1 ? 6 : weekday - 2)
-    }
 }
 
 #Preview(traits: .sizeThatFitsLayout) {
-    SubscriptionsCalendar(month: 11, year: 2024, subscriptions: [])
+    SubscriptionsCalendar(subscriptions: [])
         .padding()
         .preferredColorScheme(.dark)
+        .environment(CalendarViewModel(.now))
 }

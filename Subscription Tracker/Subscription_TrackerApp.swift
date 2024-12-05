@@ -11,7 +11,9 @@ import SwiftData
 @main
 struct Subscription_TrackerApp: App {
     let container: ModelContainer
+    
     let subscriptionsViewModel: SubscriptionsViewModel
+    let calendarViewModel: CalendarViewModel
     
     init() {
         do {
@@ -34,7 +36,8 @@ struct Subscription_TrackerApp: App {
             fatalError("Failed to create ModelContainer.")
         }
         
-        subscriptionsViewModel = .init(modelContext: container.mainContext)
+        subscriptionsViewModel = SubscriptionsViewModel(modelContext: container.mainContext)
+        calendarViewModel = CalendarViewModel(.now)
     }
     
     var body: some Scene {
@@ -45,5 +48,6 @@ struct Subscription_TrackerApp: App {
         }
         .modelContainer(container)
         .environment(subscriptionsViewModel)
+        .environment(calendarViewModel)
     }
 }
