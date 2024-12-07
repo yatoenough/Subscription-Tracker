@@ -34,7 +34,7 @@ struct CalendarView: View {
                             CalendarTrait(color: Color(hex: type.colorHex), text: type.value)
                         }
                     }
-        
+                    
                     SubscriptionsCalendar(subscriptions: subscriptions)
                 }
                 .padding()
@@ -71,7 +71,7 @@ struct CalendarView: View {
 #Preview {
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
     let container = try! ModelContainer(for: Subscription.self, SubscriptionType.self, configurations: config)
-     
+    
     for typeCase in DefaultSubscriptionTypes.allCases {
         let type = typeCase.getValue()
         container.mainContext.insert(type)

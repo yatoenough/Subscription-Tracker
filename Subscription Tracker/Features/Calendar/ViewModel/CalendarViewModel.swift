@@ -48,4 +48,10 @@ class CalendarViewModel {
         
         return (weekday == 1 ? 6 : weekday - 2)
     }
+    
+    func dateForDay(_ day: Int) -> Date {
+        let calendar = Calendar.current
+        let components = DateComponents(year: year, month: month, day: day)
+        return calendar.date(from: components) ?? Date()
+    }
 }

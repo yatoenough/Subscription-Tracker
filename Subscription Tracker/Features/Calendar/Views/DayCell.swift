@@ -11,8 +11,6 @@ struct DayCell: View {
     let dayNumber: Int
     let subscriptions: [Subscription]?
     
-    @State var dayInfoModalPresented: Bool = false
-    
     var body: some View {
         ZStack {
             VStack {
@@ -30,7 +28,6 @@ struct DayCell: View {
                                     .overlay {
                                         Text("+\(count-1)")
                                             .font(.caption2)
-                                            .scaledToFit()
                                             .bold()
                                         
                                     }.offset(x: 5, y: 0)
@@ -38,6 +35,7 @@ struct DayCell: View {
                                 EmptyView()
                             }
                         }
+                    
                     
                 } else {
                     Rectangle()
@@ -54,21 +52,9 @@ struct DayCell: View {
                 RoundedRectangle(cornerRadius: 15)
                     .fill(Color(K.Colors.secondaryGray))
             )
-            .gesture(
-                TapGesture()
-                    .onEnded {
-                        dayInfoModalPresented.toggle()
-                    }
-            )
-        }.sheet(isPresented: $dayInfoModalPresented) {
-            if let subscriptions {
-                DayDetails(subscriptions: subscriptions)
-            }
         }
     }
 }
-
-
 
 #Preview(traits: .sizeThatFitsLayout) {
     HStack {

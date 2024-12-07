@@ -40,16 +40,14 @@ struct SubscriptionsCalendar: View {
                         let filteredSubscriptions = subscriptions.filter({ sub in
                             Calendar.current.component(.day, from: sub.date) == index - firstWeekday + 1
                         })
-                        
-                        if filteredSubscriptions.count > 1 {
-                            DayCell(dayNumber: index - firstWeekday + 1, subscriptions: filteredSubscriptions)
-                        } else if filteredSubscriptions.count == 1 {
-                            DayCell(dayNumber: index - firstWeekday + 1, subscriptions: filteredSubscriptions)
+                        NavigationLink(destination: DayDetails(date: calendarViewModel.dateForDay(index - firstWeekday + 1), subscriptions: filteredSubscriptions)) {
+                            if filteredSubscriptions.count >= 1 {
+                                DayCell(dayNumber: index - firstWeekday + 1, subscriptions: filteredSubscriptions)
+                            } else {
+                                DayCell(dayNumber: index - firstWeekday + 1, subscriptions: nil)
+                            }
                         }
-                        else {
-                            DayCell(dayNumber: index - firstWeekday + 1, subscriptions: nil)
-                        }
-                        
+                        .foregroundStyle(.white)
                     }
                 }
             }
