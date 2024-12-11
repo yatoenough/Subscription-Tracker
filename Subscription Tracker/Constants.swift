@@ -6,6 +6,8 @@
 //
 
 struct K {
+    static let firstLaunchFlag = "wasLaunched"
+    
     struct Colors {
         static let background = "Background"
         static let secondaryText = "SecondaryText"

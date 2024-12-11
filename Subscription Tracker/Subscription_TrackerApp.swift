@@ -21,10 +21,10 @@ struct Subscription_TrackerApp: App {
                 for: Subscription.self, SubscriptionType.self
             )
             
-            let isFirstLaunch = !UserDefaults.standard.bool(forKey: "firstLaunch")
+            let isFirstLaunch = !UserDefaults.standard.bool(forKey: K.firstLaunchFlag)
             
             if isFirstLaunch {
-                UserDefaults.standard.set(true, forKey: "firstLaunch")
+                UserDefaults.standard.set(true, forKey: K.firstLaunchFlag)
                 for typeCase in DefaultSubscriptionTypes.allCases {
                     let type = typeCase.getValue()
                     container.mainContext.insert(type)
