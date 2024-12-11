@@ -19,6 +19,15 @@ class SubscriptionType {
         self.value = value
         self.colorHex = colorHex
     }
+    
+    #warning("FIXME")
+    
+    static var defaultTypes: [String: SubscriptionType] = [
+        "yearly": SubscriptionType(value: "Yearly", colorHex: Color.purple.toHex()!),
+        "monthly": SubscriptionType(value: "Monthly", colorHex: Color.green.toHex()!),
+        "weekly": SubscriptionType(value: "Weekly", colorHex: Color.blue.toHex()!),
+        "quarterly": SubscriptionType(value: "Quarterly", colorHex: Color.orange.toHex()!),
+    ]
 }
 
 enum DefaultSubscriptionTypes: CaseIterable {
@@ -30,13 +39,13 @@ enum DefaultSubscriptionTypes: CaseIterable {
     func getValue() -> SubscriptionType {
         switch self {
         case .yearly:
-            return SubscriptionType(value: "Yearly", colorHex: Color.purple.toHex()!)
+            return SubscriptionType.defaultTypes["yearly"]!
         case .monthly:
-            return SubscriptionType(value: "Monthly", colorHex: Color.green.toHex()!)
+            return SubscriptionType.defaultTypes["monthly"]!
         case .weekly:
-            return SubscriptionType(value: "Weekly", colorHex: Color.blue.toHex()!)
+            return SubscriptionType.defaultTypes["weekly"]!
         case .quarterly:
-            return SubscriptionType(value: "Quarterly", colorHex: Color.orange.toHex()!)
+            return SubscriptionType.defaultTypes["quarterly"]!
         }
     }
 }

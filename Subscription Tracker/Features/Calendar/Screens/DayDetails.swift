@@ -60,10 +60,12 @@ struct DayDetails: View {
 }
 
 #Preview {
-    DayDetails(date: Date(), subscriptions: [
-        Subscription(name: "Test", price: 100, type: DefaultSubscriptionTypes.monthly.getValue(),date: Date()),
-        Subscription(name: "Test", price: 100, type: DefaultSubscriptionTypes.monthly.getValue(), date: Date())
-    ])
-    .preferredColorScheme(.dark)
-    .environment(CalendarViewModel(.now))
+    NavigationView {
+        DayDetails(date: Date(), subscriptions: [
+            Subscription(name: "Test", price: 100, type: DefaultSubscriptionTypes.monthly.getValue(),date: Date()),
+            Subscription(name: "Test", price: 100, type: DefaultSubscriptionTypes.monthly.getValue(), date: Date())
+        ])
+        .preferredColorScheme(.dark)
+        .environment(CalendarViewModel(.now))
+    }
 }

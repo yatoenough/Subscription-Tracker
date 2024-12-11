@@ -53,14 +53,11 @@ struct CalendarView: View {
                         .font(.title2)
                     }
                     ToolbarItemGroup(placement: .topBarTrailing) {
-                        Button(action: {
-                            subscriptionsViewModel.addSubscription(Subscription(name: "Test", price: 23, type: defaultSubscriptionTypes.last!, date: Date()))
-                        }, label: {
+                        NavigationLink(destination: AddSubscriptionForm()) {
                             Text("+")
                                 .font(.title)
                                 .foregroundStyle(.white)
-                        })
-                        
+                        }
                     }
                 }
             }
