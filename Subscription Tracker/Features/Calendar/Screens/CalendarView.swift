@@ -15,13 +15,9 @@ struct CalendarView: View {
     var subscriptions: [Subscription] { subscriptionsViewModel.getSubscriptions() }
     
     var body: some View {
-        ZStack {
-            Color(K.Colors.background)
-                .ignoresSafeArea()
+            
             ScrollView {
                 VStack {
-                    Divider()
-                        .foregroundStyle(Color(K.Colors.secondaryGray))
                     
                     MonthTotalInfo(total: 23.45)
                         .padding(.vertical)
@@ -31,7 +27,7 @@ struct CalendarView: View {
                     
                     LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3), spacing: 5) {
                         ForEach(defaultSubscriptionTypes, id: \.self) { type in
-                            CalendarTrait(color: Color(hex: type.colorHex), text: type.value)
+                            SubscriptionTrait(color: Color(hex: type.colorHex), text: type.value)
                         }
                     }
                     
@@ -60,7 +56,7 @@ struct CalendarView: View {
                         }
                     }
                 }
-            }
+            
         }
     }
 }

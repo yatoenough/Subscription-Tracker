@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CalendarTrait: View {
+struct SubscriptionTrait: View {
     let color: Color
     let text: String
     
@@ -24,5 +24,5 @@ struct CalendarTrait: View {
 
 
 #Preview(traits: .sizeThatFitsLayout) {
-    CalendarTrait(color: .purple, text: "Text")
+    SubscriptionTrait(color: .purple, text: "Text")
 }

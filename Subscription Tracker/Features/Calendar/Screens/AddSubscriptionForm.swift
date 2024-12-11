@@ -54,7 +54,7 @@ struct AddSubscriptionForm: View {
     private var currencyFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
-        formatter.currencySymbol = "$" // Adjust for desired currency
+        formatter.currencySymbol = "$"
         formatter.maximumFractionDigits = 2
         return formatter
     }

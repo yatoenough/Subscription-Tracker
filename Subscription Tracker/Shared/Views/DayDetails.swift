@@ -32,7 +32,7 @@ struct DayDetails: View {
                             }
                             
                             HStack {
-                                CalendarTrait(color: Color(hex: subscription.type.colorHex), text: subscription.type.value)
+                                SubscriptionTrait(color: Color(hex: subscription.type.colorHex), text: subscription.type.value)
                                     .padding(.trailing)
                                 
                                 Image(systemName: "dollarsign.circle.fill")
