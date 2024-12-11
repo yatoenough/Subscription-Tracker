@@ -21,7 +21,7 @@ struct AddSubscriptionForm: View {
         }
         return types
     }
-    @State private var frequency: SubscriptionType = .defaultTypes["monthly"]!
+    @State private var frequency: SubscriptionType = DefaultSubscriptionTypes.monthly.getValue()
     
     var body: some View {
         
