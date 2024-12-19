@@ -11,7 +11,7 @@ struct AddSubscriptionForm: View {
     @State private var name: String = ""
     
     @State private var date: Date = Date()
-    @State private var amount: Double = 0
+    @State private var amount: String = ""
     
     private var subscriptionTypes: [SubscriptionType] {
         var types: [SubscriptionType] = []
@@ -42,22 +42,29 @@ struct AddSubscriptionForm: View {
                                 .tag(type)
                         }
                     }
-                    TextField("e.g. 12.99", value: $amount, formatter: currencyFormatter)
-                        .keyboardType(.decimalPad)
+                    .pickerStyle(.segmented)
+                    HStack {
+                        Text("$")
+                        
+                        TextField("0.00", text: $amount)
+                            .keyboardType(.decimalPad)
+                    }
+                    
+                    
                 }
+            }
+            .onTapGesture {
+                dismissKeyboard()
             }
             .navigationTitle("Add Subscription")
             .scrollContentBackground(.hidden)
         }
     }
     
-    private var currencyFormatter: NumberFormatter {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.currencySymbol = "$"
-        formatter.maximumFractionDigits = 2
-        return formatter
+    private func dismissKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
+    
 }
 
 #Preview {
