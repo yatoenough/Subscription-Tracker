@@ -17,6 +17,7 @@ struct AddSubscriptionForm: View {
     @State private var alertVisible = false
     
     @Environment(SubscriptionsViewModel.self) var subscriptionsViewModel: SubscriptionsViewModel
+    @Environment(\.dismiss) var dismiss
     
     private var frequencies: [FrequencyType] {
         subscriptionsViewModel.getFrequencies()
@@ -49,7 +50,9 @@ struct AddSubscriptionForm: View {
                     }
                 }
                 
-                Button("Add Subscription") { addSubscription() }
+                Button("Add Subscription") {
+                    addSubscription()
+                }
             }
             .navigationTitle("Add Subscription")
             .scrollContentBackground(.hidden)
@@ -70,6 +73,7 @@ struct AddSubscriptionForm: View {
         
         let subscription = Subscription(name: name, price: amount!, type: frequency!, date: date)
         subscriptionsViewModel.addSubscription(subscription)
+        dismiss()
     }
     
     private func numberFormatter() -> NumberFormatter {
