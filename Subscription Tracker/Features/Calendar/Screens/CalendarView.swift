@@ -11,7 +11,7 @@ import SwiftData
 struct CalendarView: View {
     @Environment(SubscriptionsViewModel.self) var subscriptionsViewModel: SubscriptionsViewModel
     
-    @Query(sort: \SubscriptionType.value) var defaultSubscriptionTypes: [SubscriptionType]
+    @Query(sort: \FrequencyType.value) var frequencies: [FrequencyType]
     var subscriptions: [Subscription] { subscriptionsViewModel.getSubscriptions() }
     
     var body: some View {
@@ -26,7 +26,7 @@ struct CalendarView: View {
                         .foregroundStyle(Color(K.Colors.secondaryGray))
                     
                     LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3), spacing: 5) {
-                        ForEach(defaultSubscriptionTypes, id: \.self) { type in
+                        ForEach(frequencies, id: \.self) { type in
                             SubscriptionTrait(color: Color(hex: type.colorHex), text: type.value)
                         }
                     }
@@ -63,13 +63,13 @@ struct CalendarView: View {
 
 #Preview {
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
-    let container = try! ModelContainer(for: Subscription.self, SubscriptionType.self, configurations: config)
+    let container = try! ModelContainer(for: Subscription.self, FrequencyType.self, configurations: config)
     
-    let defaultTypes: [SubscriptionType] = [
-        SubscriptionType(value: "Yearly", colorHex: Color.purple.toHex()!),
-        SubscriptionType(value: "Monthly", colorHex: Color.green.toHex()!),
-        SubscriptionType(value: "Weekly", colorHex: Color.blue.toHex()!),
-        SubscriptionType(value: "Quarterly", colorHex: Color.orange.toHex()!),
+    let defaultTypes: [FrequencyType] = [
+        FrequencyType(value: "Yearly", colorHex: Color.purple.toHex()!),
+        FrequencyType(value: "Monthly", colorHex: Color.green.toHex()!),
+        FrequencyType(value: "Weekly", colorHex: Color.blue.toHex()!),
+        FrequencyType(value: "Quarterly", colorHex: Color.orange.toHex()!),
     ]
     
     for type in defaultTypes {

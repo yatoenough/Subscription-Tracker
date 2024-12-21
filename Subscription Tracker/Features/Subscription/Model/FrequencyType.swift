@@ -1,5 +1,5 @@
 //
-//  SubscriptionType.swift
+//  FrequencyType.swift
 //  Subscription Tracker
 //
 //  Created by Nikita Shyshkin on 01/12/2024.
@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 @Model
-class SubscriptionType {
+class FrequencyType {
     @Attribute(.unique) var id: UUID = UUID()
     var value: String
     var colorHex: String

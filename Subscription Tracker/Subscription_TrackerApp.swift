@@ -18,7 +18,7 @@ struct Subscription_TrackerApp: App {
     init() {
         do {
             container = try ModelContainer(
-                for: Subscription.self, SubscriptionType.self
+                for: Subscription.self, FrequencyType.self
             )
             
             let isFirstLaunch = !UserDefaults.standard.bool(forKey: K.firstLaunchFlag)
@@ -26,14 +26,14 @@ struct Subscription_TrackerApp: App {
             if isFirstLaunch {
                 UserDefaults.standard.set(true, forKey: K.firstLaunchFlag)
                 
-                let defaultTypes: [SubscriptionType] = [
-                    SubscriptionType(value: "Yearly", colorHex: Color.purple.toHex()!),
-                    SubscriptionType(value: "Monthly", colorHex: Color.green.toHex()!),
-                    SubscriptionType(value: "Weekly", colorHex: Color.blue.toHex()!),
-                    SubscriptionType(value: "Quarterly", colorHex: Color.orange.toHex()!),
+                let defaultFrequencies: [FrequencyType] = [
+                    FrequencyType(value: "Yearly", colorHex: Color.purple.toHex()!),
+                    FrequencyType(value: "Monthly", colorHex: Color.green.toHex()!),
+                    FrequencyType(value: "Weekly", colorHex: Color.blue.toHex()!),
+                    FrequencyType(value: "Quarterly", colorHex: Color.orange.toHex()!),
                 ]
                 
-                for type in defaultTypes {
+                for type in defaultFrequencies {
                     container.mainContext.insert(type)
                 }
             }

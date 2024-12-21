@@ -12,14 +12,14 @@ struct AddSubscriptionForm: View {
     @State private var name: String = ""
     @State private var date: Date = Date()
     @State private var amount: Double?
-    @State private var frequency: SubscriptionType?
+    @State private var frequency: FrequencyType?
     
     @State private var alertVisible = false
     
     @Environment(SubscriptionsViewModel.self) var subscriptionsViewModel: SubscriptionsViewModel
     
-    private var subscriptionTypes: [SubscriptionType] {
-        subscriptionsViewModel.getSubscriptionTypes()
+    private var frequencies: [FrequencyType] {
+        subscriptionsViewModel.getFrequencies()
     }
     
     var body: some View {
@@ -35,7 +35,7 @@ struct AddSubscriptionForm: View {
                 Section(header: Text("Date & Payment")) {
                     DatePicker("Select Date", selection: $date, displayedComponents: .date)
                     Picker("Payment Frequency", selection: $frequency) {
-                        ForEach(subscriptionTypes, id: \.self) { type in
+                        ForEach(frequencies, id: \.self) { type in
                             Text(type.value.capitalized)
                                 .tag(type)
                         }
@@ -91,7 +91,7 @@ struct AddSubscriptionForm: View {
 
 #Preview {
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
-    let container = try! ModelContainer(for: Subscription.self, SubscriptionType.self, configurations: config)
+    let container = try! ModelContainer(for: Subscription.self, FrequencyType.self, configurations: config)
     
     NavigationView {
         AddSubscriptionForm()

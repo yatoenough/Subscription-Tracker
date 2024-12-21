@@ -22,13 +22,13 @@ struct ContentView: View {
 
 #Preview {
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
-    let container = try! ModelContainer(for: Subscription.self, SubscriptionType.self, configurations: config)
+    let container = try! ModelContainer(for: Subscription.self, FrequencyType.self, configurations: config)
     
-    let defaultTypes: [SubscriptionType] = [
-        SubscriptionType(value: "Yearly", colorHex: Color.purple.toHex()!),
-        SubscriptionType(value: "Monthly", colorHex: Color.green.toHex()!),
-        SubscriptionType(value: "Weekly", colorHex: Color.blue.toHex()!),
-        SubscriptionType(value: "Quarterly", colorHex: Color.orange.toHex()!),
+    let defaultTypes: [FrequencyType] = [
+        FrequencyType(value: "Yearly", colorHex: Color.purple.toHex()!),
+        FrequencyType(value: "Monthly", colorHex: Color.green.toHex()!),
+        FrequencyType(value: "Weekly", colorHex: Color.blue.toHex()!),
+        FrequencyType(value: "Quarterly", colorHex: Color.orange.toHex()!),
     ]
     
     for type in defaultTypes {

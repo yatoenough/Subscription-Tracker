@@ -13,10 +13,10 @@ class Subscription {
     @Attribute(.unique) var id: UUID = UUID()
     var name: String
     var price: Double
-    @Relationship(deleteRule: .noAction) var type: SubscriptionType
+    @Relationship(deleteRule: .noAction) var type: FrequencyType
     var date: Date
     
-    init(name: String, price: Double, type: SubscriptionType, date: Date) {
+    init(name: String, price: Double, type: FrequencyType, date: Date) {
         self.name = name
         self.price = price
         self.type = type
