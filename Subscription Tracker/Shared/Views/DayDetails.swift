@@ -62,8 +62,8 @@ struct DayDetails: View {
 #Preview {
     NavigationView {
         DayDetails(date: Date(), subscriptions: [
-            Subscription(name: "Test", price: 100, type: DefaultSubscriptionTypes.monthly.getValue(),date: Date()),
-            Subscription(name: "Test", price: 100, type: DefaultSubscriptionTypes.monthly.getValue(), date: Date())
+            Subscription(name: "Test", price: 100, type:  SubscriptionType(value: "Monthly", colorHex: Color.green.toHex()!),date: Date()),
+            Subscription(name: "Test", price: 100, type:  SubscriptionType(value: "Monthly", colorHex: Color.green.toHex()!), date: Date())
         ])
         .preferredColorScheme(.dark)
         .environment(CalendarViewModel(.now))

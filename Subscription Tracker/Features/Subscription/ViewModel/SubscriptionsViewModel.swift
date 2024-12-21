@@ -17,6 +17,19 @@ class SubscriptionsViewModel {
         self.modelContext = modelContext
     }
     
+    func getSubscriptionTypes() -> [SubscriptionType] {
+        let fetchDescriptor = FetchDescriptor<SubscriptionType>()
+        var subscriptionTypes: [SubscriptionType] = []
+        
+        do {
+            subscriptionTypes = try modelContext.fetch(fetchDescriptor)
+        } catch {
+            print("Failed to load subscription types.")
+        }
+        
+        return subscriptionTypes
+    }
+    
     func addSubscription(_ subscription: Subscription) {
         do {
             modelContext.insert(subscription)

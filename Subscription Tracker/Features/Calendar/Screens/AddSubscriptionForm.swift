@@ -10,26 +10,19 @@ import SwiftData
 
 struct AddSubscriptionForm: View {
     @State private var name: String = ""
-    
     @State private var date: Date = Date()
     @State private var amount: Double?
+    @State private var frequency: SubscriptionType?
     
-    private var subscriptionTypes: [SubscriptionType] {
-        var types: [SubscriptionType] = []
-        for type in DefaultSubscriptionTypes.allCases {
-            let typeValue = type.getValue()
-            types.append(typeValue)
-        }
-        return types
-    }
-    
-    @State private var frequency: SubscriptionType = DefaultSubscriptionTypes.monthly.getValue()
     @State private var alertVisible = false
     
     @Environment(SubscriptionsViewModel.self) var subscriptionsViewModel: SubscriptionsViewModel
     
+    private var subscriptionTypes: [SubscriptionType] {
+        subscriptionsViewModel.getSubscriptionTypes()
+    }
+    
     var body: some View {
-        
         ZStack {
             Color(K.Colors.background)
                 .ignoresSafeArea()
@@ -57,17 +50,14 @@ struct AddSubscriptionForm: View {
                 }
                 
                 Button("Add Subscription") { addSubscription() }
-                #warning("Fix keyboard dismiss")
             }
-//            .onTapGesture {
-//                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-//            }
             .navigationTitle("Add Subscription")
             .scrollContentBackground(.hidden)
         }
         .alert("Validation Error", isPresented: $alertVisible) {
             Button("OK", role: .cancel) { }
         }
+        
     }
     
     private func addSubscription() {
@@ -78,7 +68,7 @@ struct AddSubscriptionForm: View {
             return
         }
         
-        let subscription = Subscription(name: name, price: amount!, type: frequency, date: date)
+        let subscription = Subscription(name: name, price: amount!, type: frequency!, date: date)
         subscriptionsViewModel.addSubscription(subscription)
     }
     
@@ -92,6 +82,7 @@ struct AddSubscriptionForm: View {
     private func validateData() -> Bool {
         guard amount != nil else { return false }
         guard !name.isEmpty else { return false }
+        guard frequency != nil else { return false }
         
         return true
     }

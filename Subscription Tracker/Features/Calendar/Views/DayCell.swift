@@ -59,12 +59,12 @@ struct DayCell: View {
 #Preview(traits: .sizeThatFitsLayout) {
     HStack {
         DayCell(dayNumber: 13, subscriptions: [
-            Subscription(name: "Test", price: 100, type: DefaultSubscriptionTypes.monthly.getValue(), date: Date()),
-            Subscription(name: "Test", price: 100, type: DefaultSubscriptionTypes.monthly.getValue(), date: Date())
+            Subscription(name: "Test", price: 100, type:  SubscriptionType(value: "Monthly", colorHex: Color.green.toHex()!), date: Date()),
+            Subscription(name: "Test", price: 100, type:  SubscriptionType(value: "Monthly", colorHex: Color.green.toHex()!), date: Date())
         ])
         
         DayCell(dayNumber: 13, subscriptions: [
-            Subscription(name: "Test", price: 100, type: DefaultSubscriptionTypes.monthly.getValue(), date: Date())
+            Subscription(name: "Test", price: 100, type:  SubscriptionType(value: "Monthly", colorHex: Color.green.toHex()!), date: Date())
         ])
         
         DayCell(dayNumber: 13, subscriptions: nil)

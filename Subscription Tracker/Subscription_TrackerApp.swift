@@ -25,8 +25,15 @@ struct Subscription_TrackerApp: App {
             
             if isFirstLaunch {
                 UserDefaults.standard.set(true, forKey: K.firstLaunchFlag)
-                for typeCase in DefaultSubscriptionTypes.allCases {
-                    let type = typeCase.getValue()
+                
+                let defaultTypes: [SubscriptionType] = [
+                    SubscriptionType(value: "Yearly", colorHex: Color.purple.toHex()!),
+                    SubscriptionType(value: "Monthly", colorHex: Color.green.toHex()!),
+                    SubscriptionType(value: "Weekly", colorHex: Color.blue.toHex()!),
+                    SubscriptionType(value: "Quarterly", colorHex: Color.orange.toHex()!),
+                ]
+                
+                for type in defaultTypes {
                     container.mainContext.insert(type)
                 }
             }
