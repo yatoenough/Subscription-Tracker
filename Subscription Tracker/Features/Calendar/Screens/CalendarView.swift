@@ -10,6 +10,7 @@ import SwiftData
 
 struct CalendarView: View {
     @Environment(SubscriptionsViewModel.self) var subscriptionsViewModel: SubscriptionsViewModel
+    @Environment(CalendarViewModel.self) var calendarViewModel: CalendarViewModel
     
     @Query(sort: \FrequencyType.value) var frequencies: [FrequencyType]
     var subscriptions: [Subscription] { subscriptionsViewModel.getSubscriptions() }
@@ -18,7 +19,7 @@ struct CalendarView: View {
         ScrollView {
             VStack {
                 
-                MonthTotalInfo(total: 23.45)
+                MonthTotalInfo(total: subscriptionsViewModel.calculateMonthlySubscriptionCost(month: calendarViewModel.month ))
                     .padding(.vertical)
                 
                 Divider()

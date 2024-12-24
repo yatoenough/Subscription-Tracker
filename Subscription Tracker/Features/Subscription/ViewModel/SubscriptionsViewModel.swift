@@ -51,4 +51,14 @@ class SubscriptionsViewModel {
         
         return subscriptions
     }
+    
+    func calculateMonthlySubscriptionCost(month: Int) -> Double {
+        let subscriptions = getSubscriptions()
+        
+        let filtered = subscriptions.filter({ sub in
+            Calendar.current.component(.month, from: sub.date) == month
+        })
+        
+        return filtered.reduce(0) { $0 + $1.price }
+    }
 }
