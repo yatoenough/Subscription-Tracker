@@ -15,48 +15,24 @@ struct CalendarView: View {
     var subscriptions: [Subscription] { subscriptionsViewModel.getSubscriptions() }
     
     var body: some View {
-            
-            ScrollView {
-                VStack {
-                    
-                    MonthTotalInfo(total: 23.45)
-                        .padding(.vertical)
-                    
-                    Divider()
-                        .foregroundStyle(Color(K.Colors.secondaryGray))
-                    
-                    LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3), spacing: 5) {
-                        ForEach(frequencies, id: \.self) { type in
-                            SubscriptionTrait(color: Color(hex: type.colorHex), text: type.value)
-                        }
-                    }
-                    
-                    SubscriptionsCalendar(subscriptions: subscriptions)
-                }
-                .padding()
-                .toolbar {
-                    ToolbarItemGroup(placement: .topBarLeading) {
-                        Button("Calendar") {
-                            print(Color.red.toHex()!)
-                        }
-                        .foregroundStyle(.white)
-                        .font(.title2)
-                        
-                        Button("List") {
-                            print("Pressed")
-                        }
-                        .foregroundStyle(Color(K.Colors.secondaryText))
-                        .font(.title2)
-                    }
-                    ToolbarItemGroup(placement: .topBarTrailing) {
-                        NavigationLink(destination: AddSubscriptionForm()) {
-                            Text("+")
-                                .font(.title)
-                                .foregroundStyle(.white)
-                        }
+        ScrollView {
+            VStack {
+                
+                MonthTotalInfo(total: 23.45)
+                    .padding(.vertical)
+                
+                Divider()
+                    .foregroundStyle(Color(K.Colors.secondaryGray))
+                
+                LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3), spacing: 5) {
+                    ForEach(frequencies, id: \.self) { type in
+                        SubscriptionTrait(color: Color(hex: type.colorHex), text: type.value)
                     }
                 }
-            
+                
+                SubscriptionsCalendar(subscriptions: subscriptions)
+            }
+            .padding()
         }
     }
 }
