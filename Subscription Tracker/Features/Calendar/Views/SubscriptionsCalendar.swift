@@ -58,8 +58,7 @@ struct SubscriptionsCalendar: View {
 }
 
 #Preview(traits: .sizeThatFitsLayout) {
-    SubscriptionsCalendar(subscriptions: [])
-        .padding()
-        .preferredColorScheme(.dark)
-        .environment(CalendarViewModel(.now))
+    SubscriptionsDataPreview {
+        SubscriptionsCalendar(subscriptions: [])
+    }
 }

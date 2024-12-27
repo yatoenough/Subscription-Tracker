@@ -94,14 +94,8 @@ struct AddSubscriptionForm: View {
 }
 
 #Preview {
-    let config = ModelConfiguration(isStoredInMemoryOnly: true)
-    let container = try! ModelContainer(for: Subscription.self, FrequencyType.self, configurations: config)
-    
-    NavigationView {
+    SubscriptionsDataPreview {
         AddSubscriptionForm()
     }
-    .preferredColorScheme(.dark)
-    .modelContainer(container)
-    .environment(SubscriptionsViewModel(modelContext: container.mainContext))
     
 }
