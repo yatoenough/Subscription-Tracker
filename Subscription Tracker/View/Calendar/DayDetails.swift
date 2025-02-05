@@ -26,37 +26,30 @@ struct DayDetails: View {
     }()
     
     var body: some View {
-        ScrollView {
-            ForEach(subscriptions, id: \.id) { subscription in
-                VStack(alignment: .leading) {
-                    Text(subscription.name)
-                        .font(.title)
-                        .bold()
-                    
-                    HStack {
-                        SubscriptionTrait(color: subscription.type.color, text: subscription.type.value)
-                            .padding(.trailing)
+        List(subscriptions, id: \.id) { subscription in
+            
+            SubscriptionItem(subscription: subscription)
+                .swipeActions(edge: .trailing) {
+                    Button("Edit", systemImage: "pencil") {
                         
-                        Image(systemName: "dollarsign.circle.fill")
-                            .foregroundStyle(subscription.type.color)
-                        
-                        Text(String(format: "%.2f$", subscription.price))
-                            .font(.headline)
-                        
-                        Spacer()
                     }
+                    .frame(height: 30)
+                    .tint(.orange)
+                    
+                    Button("Delete", systemImage: "trash", role: .destructive) {
+                        
+                    }
+                    .frame(height: 30)
+                    .tint(.red)
                 }
-                .padding()
-                .background {
-                    RoundedRectangle(cornerRadius: 10)
-                        .fill(.secondaryGray)
-                }
-            }
-            .padding()
+                .listRowBackground(Color.clear)
+                .listRowSeparator(.hidden)
         }
         .background(
             Color.background
         )
+        .listStyle(.plain) // Remove default List style
+        .scrollContentBackground(.hidden)
         .navigationTitle(dateFormatter.string(from: date))
         .navigationBarTitleDisplayMode(.large)
         
