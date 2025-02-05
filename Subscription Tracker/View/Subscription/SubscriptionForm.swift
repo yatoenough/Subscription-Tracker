@@ -16,6 +16,8 @@ struct SubscriptionForm: View {
         return formatter
     }()
     
+    private let subscriptionToEdit: Subscription?
+    
     @State private var alertVisible = false
     
     @Environment(SubscriptionsViewModel.self) private var subscriptionsViewModel
@@ -24,10 +26,15 @@ struct SubscriptionForm: View {
     
     @Query private var frequencies: [Frequency]
     
+    init(subscriptionToEdit: Subscription? = nil) {
+        self.subscriptionToEdit = subscriptionToEdit
+    }
+    
     var body: some View {
         @Bindable var subscriptionsFormViewModel = subscriptionsFormViewModel
+        subscriptionsFormViewModel.setSubscriptionToEdit(subscriptionToEdit)
         
-        VStack {
+        return VStack {
             Form {
                 Section(header: Text("Name")) {
                     TextField("e.g. Spotify", text: $subscriptionsFormViewModel.name)
@@ -61,7 +68,7 @@ struct SubscriptionForm: View {
                 }
             }
         }
-        .navigationTitle("Add Subscription")
+        .navigationTitle(subscriptionsFormViewModel.editMode ? "Edit Subscription" : "Add Subscription")
         .navigationBarTitleDisplayMode(.large)
         .scrollContentBackground(.hidden)
         .background(Color.background)

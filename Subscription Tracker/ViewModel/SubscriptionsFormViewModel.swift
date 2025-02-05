@@ -18,9 +18,14 @@ class SubscriptionsFormViewModel {
     var errorMessage: String = ""
     
     private let subscriptionsViewModel: SubscriptionsViewModel
+    private var subscriptionToEdit: Subscription?
     
     init(subscriptionsViewModel: SubscriptionsViewModel) {
         self.subscriptionsViewModel = subscriptionsViewModel
+    }
+    
+    var editMode: Bool {
+        subscriptionToEdit != nil
     }
     
     func saveSubscription() -> Bool{
@@ -40,11 +45,14 @@ class SubscriptionsFormViewModel {
         return true
     }
     
-    public func setSubscriptionToEdit(_ subscription: Subscription) {
-        name = subscription.name
-        date = subscription.date
-        amount = subscription.price
-        frequency = subscription.type
+    public func setSubscriptionToEdit(_ subscription: Subscription?) {
+        subscriptionToEdit = subscription
+        if let subscription {
+            name = subscription.name
+            date = subscription.date
+            amount = subscription.price
+            frequency = subscription.type
+        }
     }
     
     private func resetForm() {
