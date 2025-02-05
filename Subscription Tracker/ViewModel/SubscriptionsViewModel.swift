@@ -47,4 +47,8 @@ class SubscriptionsViewModel {
         
         return filtered.reduce(0) { $0 + $1.price }
     }
+    
+    func deleteSubscription(_ subscription: Subscription) {
+        modelContext.delete(subscription)
+    }
 }

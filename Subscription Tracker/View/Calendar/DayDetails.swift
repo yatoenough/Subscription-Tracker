@@ -11,11 +11,11 @@ struct DayDetails: View {
     let subscriptions: [Subscription]
     let date: Date
     
-    @State private var calendarViewModel: CalendarViewModel
+    @Environment(SubscriptionsViewModel.self) private var subscriptionsViewModel
+    @Environment(CalendarViewModel.self) private var calendarViewModel
     
     init(date: Date, subscriptions: [Subscription]) {
         self.date = date
-        self.calendarViewModel = CalendarViewModel(date)
         self.subscriptions = subscriptions
     }
     
@@ -37,7 +37,7 @@ struct DayDetails: View {
                     .tint(.orange)
                     
                     Button("Delete", systemImage: "trash", role: .destructive) {
-                        
+                        subscriptionsViewModel.deleteSubscription(subscription)
                     }
                     .frame(height: 30)
                     .tint(.red)
@@ -57,12 +57,10 @@ struct DayDetails: View {
 }
 
 #Preview {
-    NavigationStack {
+    DataPreview {
         DayDetails(date: .now, subscriptions: [
             Subscription(name: "Test", price: 100, type:  Frequency(value: "Monthly", colorHex: Color.green.toHex()!), date: .now),
             Subscription(name: "Test", price: 100, type:  Frequency(value: "Monthly", colorHex: Color.green.toHex()!), date: .now)
         ])
-        .preferredColorScheme(.dark)
-        .environment(CalendarViewModel(.now))
     }
 }
