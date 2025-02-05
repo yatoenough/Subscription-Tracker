@@ -38,7 +38,13 @@ class SubscriptionsFormViewModel {
             date: date
         )
         
-        subscriptionsViewModel.addSubscription(subscription)
+        if let subscriptionToEdit {
+            subscriptionsViewModel.editSubscription(id: subscriptionToEdit.id, subscription)
+        } else {
+            subscriptionsViewModel.addSubscription(subscription)
+        }
+        
+        
         
         resetForm()
         

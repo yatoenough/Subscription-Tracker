@@ -19,20 +19,20 @@ struct SubscriptionForm: View {
     private let subscriptionToEdit: Subscription?
     
     @State private var alertVisible = false
+    @State private var subscriptionsFormViewModel: SubscriptionsFormViewModel
     
     @Environment(SubscriptionsViewModel.self) private var subscriptionsViewModel
-    @Environment(SubscriptionsFormViewModel.self) private var subscriptionsFormViewModel
     @Environment(\.dismiss) private var dismiss
     
     @Query private var frequencies: [Frequency]
     
-    init(subscriptionToEdit: Subscription? = nil) {
+    init(subscriptionToEdit: Subscription? = nil, subscriptionsFormViewModel: SubscriptionsFormViewModel) {
         self.subscriptionToEdit = subscriptionToEdit
+        self.subscriptionsFormViewModel = subscriptionsFormViewModel
+        self.subscriptionsFormViewModel.setSubscriptionToEdit(self.subscriptionToEdit)
     }
     
     var body: some View {
-        @Bindable var subscriptionsFormViewModel = subscriptionsFormViewModel
-        subscriptionsFormViewModel.setSubscriptionToEdit(subscriptionToEdit)
         
         return VStack {
             Form {
@@ -56,7 +56,7 @@ struct SubscriptionForm: View {
                     }
                 }
                 
-                Button("Add Subscription") {
+                Button(subscriptionsFormViewModel.editMode ? "Edit Subscription" : "Add Subscription") {
                     let success = subscriptionsFormViewModel.saveSubscription()
                     
                     if !success {
@@ -80,8 +80,18 @@ struct SubscriptionForm: View {
 }
 
 #Preview {
+    let previewModelContainer = PreviewModelContainerProvider.provide(for: [Subscription.self, Frequency.self])
+    
     DataPreview {
-        SubscriptionForm()
+        SubscriptionForm(
+            subscriptionToEdit: nil,
+            subscriptionsFormViewModel: SubscriptionsFormViewModel(
+                subscriptionsViewModel: SubscriptionsViewModel(
+                    modelContext: ModelContext(previewModelContainer)
+                )
+            )
+        )
     }
+    
     
 }

@@ -14,6 +14,8 @@ struct DayDetails: View {
     @Environment(SubscriptionsViewModel.self) private var subscriptionsViewModel
     @Environment(CalendarViewModel.self) private var calendarViewModel
     
+    @State private var subscriptionToEdit: Subscription? = nil
+    
     init(date: Date, subscriptions: [Subscription]) {
         self.date = date
         self.subscriptions = subscriptions
@@ -27,32 +29,33 @@ struct DayDetails: View {
     
     var body: some View {
         List(subscriptions, id: \.id) { subscription in
-            
             SubscriptionItem(subscription: subscription)
                 .swipeActions(edge: .trailing) {
                     Button("Edit", systemImage: "pencil") {
-                        
+                        subscriptionToEdit = subscription
                     }
-                    .frame(height: 30)
                     .tint(.orange)
                     
                     Button("Delete", systemImage: "trash", role: .destructive) {
                         subscriptionsViewModel.deleteSubscription(subscription)
                     }
-                    .frame(height: 30)
                     .tint(.red)
                 }
                 .listRowBackground(Color.clear)
                 .listRowSeparator(.hidden)
+            
+            
         }
+        .sheet(item: $subscriptionToEdit, content: { subscriptionToEdit in
+            SubscriptionForm(subscriptionToEdit: subscriptionToEdit, subscriptionsFormViewModel: SubscriptionsFormViewModel(subscriptionsViewModel: subscriptionsViewModel))
+        })
         .background(
             Color.background
         )
-        .listStyle(.plain) // Remove default List style
+        .listStyle(.plain)
         .scrollContentBackground(.hidden)
         .navigationTitle(dateFormatter.string(from: date))
         .navigationBarTitleDisplayMode(.large)
-        
     }
 }
 
