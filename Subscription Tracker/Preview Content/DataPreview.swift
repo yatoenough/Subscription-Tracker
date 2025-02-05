@@ -16,17 +16,17 @@ struct DataPreview<Content: View>: View {
         self.content = content()
     }
     
-    private var modelContext: ModelContext { ModelContext(previewContainer) }
-    private let previewContainer: ModelContainer = {
-        let config = ModelConfiguration(isStoredInMemoryOnly: true)
-        let container = try! ModelContainer(for: Subscription.self, Frequency.self, configurations: config)
+    private var previewContainer: ModelContainer {
+        let container = PreviewModelContainerProvider.provide(for: [Subscription.self, Frequency.self])
         
         for type in Frequency.defaultFrequencies {
             container.mainContext.insert(type)
         }
         
         return container
-    }()
+    }
+    
+    private var modelContext: ModelContext { ModelContext(previewContainer) }
     
     private var subscriptionViewModel: SubscriptionsViewModel {
         SubscriptionsViewModel(modelContext: modelContext)

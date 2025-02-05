@@ -18,13 +18,18 @@ class SubscriptionsFormViewModel {
     var errorMessage: String = ""
     
     private let subscriptionsViewModel: SubscriptionsViewModel
+    private var subscriptionToEdit: Subscription?
     
     init(subscriptionsViewModel: SubscriptionsViewModel) {
         self.subscriptionsViewModel = subscriptionsViewModel
     }
     
-    func saveSubscription() {
-        guard validateData() else { return }
+    var editMode: Bool {
+        subscriptionToEdit != nil
+    }
+    
+    func saveSubscription() -> Bool{
+        guard validateData() else { return false }
         
         let subscription = Subscription(
             name: name,
@@ -33,9 +38,27 @@ class SubscriptionsFormViewModel {
             date: date
         )
         
-        subscriptionsViewModel.addSubscription(subscription)
+        if let subscriptionToEdit {
+            subscriptionsViewModel.editSubscription(id: subscriptionToEdit.id, subscription)
+        } else {
+            subscriptionsViewModel.addSubscription(subscription)
+        }
+        
+        
         
         resetForm()
+        
+        return true
+    }
+    
+    public func setSubscriptionToEdit(_ subscription: Subscription?) {
+        subscriptionToEdit = subscription
+        if let subscription {
+            name = subscription.name
+            date = subscription.date
+            amount = subscription.price
+            frequency = subscription.type
+        }
     }
     
     private func resetForm() {
@@ -52,9 +75,13 @@ class SubscriptionsFormViewModel {
             return false
         }
         
-        guard let amount else { return false }
+        guard let amount else {
+            errorMessage = "Amount is required"
+            return false
+        }
+        
         if amount <= 0 {
-            errorMessage = "Amount must be positive and greater than zero"
+            errorMessage = "Amount must be positive and not zero"
             return false
         }
         

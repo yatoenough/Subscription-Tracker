@@ -11,11 +11,13 @@ struct DayDetails: View {
     let subscriptions: [Subscription]
     let date: Date
     
-    @State private var calendarViewModel: CalendarViewModel
+    @Environment(SubscriptionsViewModel.self) private var subscriptionsViewModel
+    @Environment(CalendarViewModel.self) private var calendarViewModel
+    
+    @State private var subscriptionToEdit: Subscription? = nil
     
     init(date: Date, subscriptions: [Subscription]) {
         self.date = date
-        self.calendarViewModel = CalendarViewModel(date)
         self.subscriptions = subscriptions
     }
     
@@ -26,50 +28,42 @@ struct DayDetails: View {
     }()
     
     var body: some View {
-        ScrollView {
-            ForEach(subscriptions, id: \.id) { subscription in
-                VStack(alignment: .leading) {
-                    Text(subscription.name)
-                        .font(.title)
-                        .bold()
-                    
-                    HStack {
-                        SubscriptionTrait(color: subscription.type.color, text: subscription.type.value)
-                            .padding(.trailing)
-                        
-                        Image(systemName: "dollarsign.circle.fill")
-                            .foregroundStyle(subscription.type.color)
-                        
-                        Text(String(format: "%.2f$", subscription.price))
-                            .font(.headline)
-                        
-                        Spacer()
+        List(subscriptions, id: \.id) { subscription in
+            SubscriptionItem(subscription: subscription)
+                .swipeActions(edge: .trailing) {
+                    Button("Edit", systemImage: "pencil") {
+                        subscriptionToEdit = subscription
                     }
+                    .tint(.orange)
+                    
+                    Button("Delete", systemImage: "trash", role: .destructive) {
+                        subscriptionsViewModel.deleteSubscription(subscription)
+                    }
+                    .tint(.red)
                 }
-                .padding()
-                .background {
-                    RoundedRectangle(cornerRadius: 10)
-                        .fill(.secondaryGray)
-                }
-            }
-            .padding()
+                .listRowBackground(Color.clear)
+                .listRowSeparator(.hidden)
+            
+            
         }
+        .sheet(item: $subscriptionToEdit, content: { subscriptionToEdit in
+            SubscriptionForm(subscriptionToEdit: subscriptionToEdit, subscriptionsFormViewModel: SubscriptionsFormViewModel(subscriptionsViewModel: subscriptionsViewModel))
+        })
         .background(
             Color.background
         )
+        .listStyle(.plain)
+        .scrollContentBackground(.hidden)
         .navigationTitle(dateFormatter.string(from: date))
         .navigationBarTitleDisplayMode(.large)
-        
     }
 }
 
 #Preview {
-    NavigationStack {
+    DataPreview {
         DayDetails(date: .now, subscriptions: [
             Subscription(name: "Test", price: 100, type:  Frequency(value: "Monthly", colorHex: Color.green.toHex()!), date: .now),
             Subscription(name: "Test", price: 100, type:  Frequency(value: "Monthly", colorHex: Color.green.toHex()!), date: .now)
         ])
-        .preferredColorScheme(.dark)
-        .environment(CalendarViewModel(.now))
     }
 }
