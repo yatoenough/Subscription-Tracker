@@ -21,7 +21,7 @@ class SubscriptionsViewModel {
             modelContext.insert(subscription)
             try modelContext.save()
         } catch {
-            print("Failed to save subscription.")
+            print("Failed to save subscription: \(error.localizedDescription)")
         }
     }
     
@@ -32,7 +32,7 @@ class SubscriptionsViewModel {
         do {
             subscriptions = try modelContext.fetch(fetchDescriptor)
         } catch {
-            print("Failed to load subscriptions.")
+            print("Failed to load subscriptions: \(error.localizedDescription)")
         }
         
         return subscriptions

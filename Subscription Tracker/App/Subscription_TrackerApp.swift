@@ -29,7 +29,7 @@ struct Subscription_TrackerApp: App {
                 try container.mainContext.save()
             }
         } catch {
-            fatalError("Failed to create ModelContainer.")
+            fatalError("Failed to create ModelContainer: \(error.localizedDescription)")
         }
     }
     
