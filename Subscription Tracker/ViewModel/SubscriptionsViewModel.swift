@@ -7,27 +7,13 @@
 
 import Foundation
 import SwiftData
-import SwiftUI
 
 @Observable
 class SubscriptionsViewModel {
-    var modelContext: ModelContext
+    private var modelContext: ModelContext
     
     init(modelContext: ModelContext) {
         self.modelContext = modelContext
-    }
-    
-    func getFrequencies() -> [FrequencyType] {
-        let fetchDescriptor = FetchDescriptor<FrequencyType>()
-        var frequencies: [FrequencyType] = []
-        
-        do {
-            frequencies = try modelContext.fetch(fetchDescriptor)
-        } catch {
-            print("Failed to load subscription types.")
-        }
-        
-        return frequencies
     }
     
     func addSubscription(_ subscription: Subscription) {

@@ -10,13 +10,13 @@ import SwiftData
 
 @Model
 class Subscription {
-    @Attribute(.unique) var id: UUID = UUID()
+    var id: UUID = UUID()
     var name: String
     var price: Double
-    @Relationship(deleteRule: .noAction) var type: FrequencyType
+    var type: Frequency
     var date: Date
     
-    init(name: String, price: Double, type: FrequencyType, date: Date) {
+    init(name: String, price: Double, type: Frequency, date: Date) {
         self.name = name
         self.price = price
         self.type = type

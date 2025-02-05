@@ -10,7 +10,7 @@ import Foundation
 @Observable
 class CalendarViewModel {
     var currentDate: Date
-    let calendar = Calendar.current
+    private let calendar = Calendar.current
     
     var year: Int { calendar.component(.year, from: currentDate) }
     var month: Int { calendar.component(.month, from: currentDate) }

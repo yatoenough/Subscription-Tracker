@@ -10,18 +10,22 @@ import SwiftUI
 struct MonthTotalInfo: View {
     let total: Double
     
-    @Environment(CalendarViewModel.self) var calendarViewModel: CalendarViewModel
+    @Environment(CalendarViewModel.self) private var calendarViewModel: CalendarViewModel
+    
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM, yyyy"
+        return formatter
+    }()
     
     var body: some View {
-        let formattedYear = String(calendarViewModel.year).replacingOccurrences(of: " ", with: "")
-        
         HStack {
-            Text("\(calendarViewModel.monthName(calendarViewModel.month)), \(formattedYear)")
+            Text(dateFormatter.string(from: calendarViewModel.currentDate))
                 .font(.title3)
                 .bold()
             Spacer()
             Text("Monthly total:")
-                .foregroundStyle(Color(K.Colors.secondaryText))
+                .foregroundStyle(.secondaryText)
             Text(String(format: "%.2f", total))
         }
     }
