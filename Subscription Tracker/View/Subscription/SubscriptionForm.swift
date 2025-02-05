@@ -26,6 +26,7 @@ struct SubscriptionForm: View {
     
     var body: some View {
         @Bindable var subscriptionsFormViewModel = subscriptionsFormViewModel
+        
         VStack {
             Form {
                 Section(header: Text("Name")) {
@@ -49,7 +50,13 @@ struct SubscriptionForm: View {
                 }
                 
                 Button("Add Subscription") {
-                    subscriptionsFormViewModel.saveSubscription()
+                    let success = subscriptionsFormViewModel.saveSubscription()
+                    
+                    if !success {
+                        alertVisible = true
+                        return
+                    }
+                    
                     dismiss()
                 }
             }
