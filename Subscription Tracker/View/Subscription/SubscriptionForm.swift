@@ -16,33 +16,31 @@ struct SubscriptionForm: View {
         return formatter
     }()
     
-    private let subscriptionToEdit: Subscription?
+    private var subscriptionToEdit: Subscription?
     
+    @State private var subscription: Subscription = Subscription(name: "", price: 0, type: Frequency(value: "", colorHex: Color.red.toHex()!), date: .now)
     @State private var alertVisible = false
-    @State private var subscriptionsFormViewModel: SubscriptionsFormViewModel
+    @State private var errorMessage: String = ""
     
     @Environment(SubscriptionsViewModel.self) private var subscriptionsViewModel
     @Environment(\.dismiss) private var dismiss
     
     @Query private var frequencies: [Frequency]
     
-    init(subscriptionToEdit: Subscription? = nil, subscriptionsFormViewModel: SubscriptionsFormViewModel) {
+    init(subscriptionToEdit: Subscription? = nil) {
         self.subscriptionToEdit = subscriptionToEdit
-        self.subscriptionsFormViewModel = subscriptionsFormViewModel
-        self.subscriptionsFormViewModel.setSubscriptionToEdit(self.subscriptionToEdit)
     }
     
     var body: some View {
-        
-        return VStack {
+        VStack {
             Form {
                 Section(header: Text("Name")) {
-                    TextField("e.g. Spotify", text: $subscriptionsFormViewModel.name)
+                    TextField("e.g. Spotify", text: $subscription.name)
                 }
                 
                 Section(header: Text("Date & Payment")) {
-                    DatePicker("Select Date", selection: $subscriptionsFormViewModel.date, displayedComponents: .date)
-                    Picker("Payment Frequency", selection: $subscriptionsFormViewModel.frequency) {
+                    DatePicker("Select Date", selection: $subscription.date, displayedComponents: .date)
+                    Picker("Payment Frequency", selection: $subscription.type) {
                         ForEach(frequencies, id: \.self) { type in
                             Text(type.value.capitalized)
                                 .tag(type)
@@ -51,13 +49,13 @@ struct SubscriptionForm: View {
                     .pickerStyle(.segmented)
                     HStack {
                         Text("$")
-                        TextField("0.00", value: $subscriptionsFormViewModel.amount, formatter: numberFormatter)
+                        TextField("0.00", value: $subscription.price, formatter: numberFormatter)
                             .keyboardType(.decimalPad)
                     }
                 }
                 
-                Button(subscriptionsFormViewModel.editMode ? "Edit Subscription" : "Add Subscription") {
-                    let success = subscriptionsFormViewModel.saveSubscription()
+                Button(editMode ? "Edit Subscription" : "Add Subscription") {
+                    let success = saveSubscription()
                     
                     if !success {
                         alertVisible = true
@@ -68,30 +66,55 @@ struct SubscriptionForm: View {
                 }
             }
         }
-        .navigationTitle(subscriptionsFormViewModel.editMode ? "Edit Subscription" : "Add Subscription")
+        .navigationTitle(editMode ? "Edit Subscription" : "Add Subscription")
         .navigationBarTitleDisplayMode(.large)
         .scrollContentBackground(.hidden)
         .background(Color.background)
-        .alert(subscriptionsFormViewModel.errorMessage, isPresented: $alertVisible) {
+        .onAppear {
+            subscription.type = frequencies.first!
+            if let subscriptionToEdit {
+                self.subscription = subscriptionToEdit
+            }
+        }
+        .alert(errorMessage, isPresented: $alertVisible) {
             Button("OK", role: .cancel) { }
         }
+    }
+    
+    var editMode: Bool {
+        subscriptionToEdit != nil
+    }
+    
+    func saveSubscription() -> Bool {
+        guard validateData() else { return false }
+        #warning("Fix subscription duplication on editing")
+        if let subscriptionToEdit {
+            subscriptionsViewModel.editSubscription(id: subscriptionToEdit.id, subscription)
+        } else {
+            subscriptionsViewModel.addSubscription(subscription)
+        }
+        
+        return true
+    }
+
+    private func validateData() -> Bool {
+        if subscription.name.isEmpty {
+            errorMessage = "Name is required"
+            return false
+        }
+        
+        if subscription.price <= 0 {
+            errorMessage = "Amount must be positive and not zero"
+            return false
+        }
+        
+        return true
     }
         
 }
 
 #Preview {
-    let previewModelContainer = PreviewModelContainerProvider.provide(for: [Subscription.self, Frequency.self])
-    
     DataPreview {
-        SubscriptionForm(
-            subscriptionToEdit: nil,
-            subscriptionsFormViewModel: SubscriptionsFormViewModel(
-                subscriptionsViewModel: SubscriptionsViewModel(
-                    modelContext: ModelContext(previewModelContainer)
-                )
-            )
-        )
+        SubscriptionForm(subscriptionToEdit: nil)
     }
-    
-    
 }

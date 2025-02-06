@@ -40,7 +40,7 @@ struct ContentView: View {
                 }
             }
             ToolbarItemGroup(placement: .topBarTrailing) {
-                NavigationLink(destination: SubscriptionForm(subscriptionToEdit: nil, subscriptionsFormViewModel: SubscriptionsFormViewModel(subscriptionsViewModel: subscriptionsViewModel))) {
+                NavigationLink(destination: SubscriptionForm(subscriptionToEdit: nil)) {
                     Text("+")
                         .font(.title)
                         .foregroundStyle(.white)

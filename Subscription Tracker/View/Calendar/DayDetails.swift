@@ -47,7 +47,7 @@ struct DayDetails: View {
             
         }
         .sheet(item: $subscriptionToEdit, content: { subscriptionToEdit in
-            SubscriptionForm(subscriptionToEdit: subscriptionToEdit, subscriptionsFormViewModel: SubscriptionsFormViewModel(subscriptionsViewModel: subscriptionsViewModel))
+            SubscriptionForm(subscriptionToEdit: subscriptionToEdit)
         })
         .background(
             Color.background
