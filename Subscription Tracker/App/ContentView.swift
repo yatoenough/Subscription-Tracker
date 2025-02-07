@@ -16,7 +16,7 @@ enum Tab: String {
 struct ContentView: View {
     @State private var selectedTab: Tab = .calendar
     
-    @Environment(SubscriptionsViewModel.self) var subscriptionsViewModel
+    @Environment(SubscriptionsViewModel.self) private var subscriptionsViewModel
     
     var body: some View {
         TabView(selection: $selectedTab) {

@@ -18,7 +18,11 @@ struct SubscriptionForm: View {
     
     private var subscriptionToEdit: Subscription?
     
-    @State private var subscription: Subscription = Subscription(name: "", price: 0, type: Frequency(value: "", colorHex: Color.red.toHex()!), date: .now)
+    private var editMode: Bool {
+        subscriptionToEdit != nil
+    }
+    
+    @State private var subscription: Subscription = Subscription(name: "", price: 0, type: Frequency.defaultFrequencies[0], date: .now)
     @State private var alertVisible = false
     @State private var errorMessage: String = ""
     
@@ -81,11 +85,7 @@ struct SubscriptionForm: View {
         }
     }
     
-    var editMode: Bool {
-        subscriptionToEdit != nil
-    }
-    
-    func saveSubscription() -> Bool {
+    private func saveSubscription() -> Bool {
         guard validateData() else { return false }
         
         if let subscriptionToEdit {

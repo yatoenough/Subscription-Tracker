@@ -14,8 +14,8 @@ struct CustomTabItem: View {
     
     var body: some View {
         Button(text, action: action)
-        .foregroundStyle(isSelected ? .white : .secondaryText)
-        .font(.title2)
+            .foregroundStyle(isSelected ? .white : .secondaryText)
+            .font(.title2)
     }
 }
 
@@ -23,6 +23,6 @@ struct CustomTabItem: View {
     CustomTabItem(text: "Calendar", isSelected: true) {
         print("")
     }
-        .preferredColorScheme(.dark)
-        .padding()
+    .preferredColorScheme(.dark)
+    .padding()
 }
