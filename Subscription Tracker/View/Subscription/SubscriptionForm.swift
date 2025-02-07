@@ -87,10 +87,10 @@ struct SubscriptionForm: View {
     
     func saveSubscription() -> Bool {
         guard validateData() else { return false }
-        #warning("Fix subscription duplication on editing")
+        
         if let subscriptionToEdit {
             subscriptionsViewModel.editSubscription(id: subscriptionToEdit.id, subscription)
-        } else {
+        } else if subscriptionToEdit == nil {
             subscriptionsViewModel.addSubscription(subscription)
         }
         
