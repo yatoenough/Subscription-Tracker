@@ -32,10 +32,6 @@ struct DataPreview<Content: View>: View {
         SubscriptionsViewModel(modelContext: modelContext)
     }
     
-    private var subscriptionsFormViewModel: SubscriptionsFormViewModel {
-        .init(subscriptionsViewModel: subscriptionViewModel)
-    }
-    
     var body: some View {
         NavigationStack {
             content
@@ -43,7 +39,6 @@ struct DataPreview<Content: View>: View {
         .preferredColorScheme(.dark)
         .modelContainer(previewContainer)
         .environment(subscriptionViewModel)
-        .environment(subscriptionsFormViewModel)
         .environment(CalendarViewModel(.now))
     }
 }

@@ -16,7 +16,7 @@ enum Tab: String {
 struct ContentView: View {
     @State private var selectedTab: Tab = .calendar
     
-    @Environment(SubscriptionsViewModel.self) var subscriptionsViewModel
+    @Environment(SubscriptionsViewModel.self) private var subscriptionsViewModel
     
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -40,7 +40,7 @@ struct ContentView: View {
                 }
             }
             ToolbarItemGroup(placement: .topBarTrailing) {
-                NavigationLink(destination: SubscriptionForm(subscriptionToEdit: nil, subscriptionsFormViewModel: SubscriptionsFormViewModel(subscriptionsViewModel: subscriptionsViewModel))) {
+                NavigationLink(destination: SubscriptionForm(subscriptionToEdit: nil)) {
                     Text("+")
                         .font(.title)
                         .foregroundStyle(.white)

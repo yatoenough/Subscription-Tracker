@@ -37,10 +37,6 @@ struct Subscription_TrackerApp: App {
         SubscriptionsViewModel(modelContext: container.mainContext)
     }
     
-    private var subscriptionsFormViewModel: SubscriptionsFormViewModel {
-        SubscriptionsFormViewModel(subscriptionsViewModel: subscriptionsViewModel)
-    }
-    
     var body: some Scene {
         WindowGroup {
             NavigationStack {
@@ -49,7 +45,6 @@ struct Subscription_TrackerApp: App {
         }
         .modelContainer(container)
         .environment(subscriptionsViewModel)
-        .environment(subscriptionsFormViewModel)
         .environment(CalendarViewModel(.now))
     }
 }

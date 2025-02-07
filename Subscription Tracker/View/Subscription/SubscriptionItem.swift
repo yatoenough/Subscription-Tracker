@@ -31,7 +31,7 @@ struct SubscriptionItem: View {
                 Image(systemName: "arrow.left")
                     .font(.footnote)
                     .foregroundColor(.white)
-                    
+                
             }
         }
         .padding()
@@ -44,6 +44,6 @@ struct SubscriptionItem: View {
 
 #Preview(traits: .sizeThatFitsLayout) {
     DataPreview {
-        SubscriptionItem(subscription: Subscription(name: "Test", price: 100, type:  Frequency(value: "Monthly", colorHex: Color.green.toHex()!), date: Date()))
+        SubscriptionItem(subscription: Subscription(name: "Test", price: 100, type: Frequency.defaultFrequencies[0], date: Date()))
     }
 }
