@@ -23,8 +23,7 @@ struct ContentView: View {
             CalendarScreen()
                 .tag(Tab.calendar)
             
-            #warning("Implement list view")
-            Text("List")
+            ListScreen()
                 .tag(Tab.list)
         }
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
@@ -32,11 +31,15 @@ struct ContentView: View {
         .toolbar {
             ToolbarItemGroup(placement: .topBarLeading) {
                 CustomTabItem(text: "Calendar", isSelected: determineSelectedView(currentTab: selectedTab, tab: .calendar)) {
-                    selectedTab = .calendar
+                    withAnimation {
+                        selectedTab = .calendar
+                    }
                 }
                 
                 CustomTabItem(text: "List", isSelected: determineSelectedView(currentTab: selectedTab, tab: .list)) {
-                    selectedTab = .list
+                    withAnimation {
+                        selectedTab = .list
+                    }
                 }
             }
             ToolbarItemGroup(placement: .topBarTrailing) {
