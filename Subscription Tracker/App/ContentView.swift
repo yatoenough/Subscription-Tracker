@@ -16,7 +16,7 @@ enum Tab: String {
 struct ContentView: View {
     @State private var selectedTab: Tab = .calendar
     
-    @Environment(SubscriptionsViewModel.self) private var subscriptionsViewModel
+    @AppStorage("selectedTab") private var storedSelectedTab: String = "calendar"
     
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -25,6 +25,12 @@ struct ContentView: View {
             
             ListScreen()
                 .tag(Tab.list)
+        }
+        .onAppear {
+            selectedTab = Tab(rawValue: storedSelectedTab) ?? .calendar
+        }
+        .onChange(of: selectedTab) { _, newValue in
+            storedSelectedTab = newValue.rawValue
         }
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
         .background(Color.background)
@@ -43,7 +49,7 @@ struct ContentView: View {
                 }
             }
             ToolbarItemGroup(placement: .topBarTrailing) {
-                NavigationLink(destination: SubscriptionForm(subscriptionToEdit: nil)) {
+                NavigationLink(destination: SubscriptionForm()) {
                     Text("+")
                         .font(.title)
                         .foregroundStyle(.white)

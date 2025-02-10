@@ -115,6 +115,6 @@ struct SubscriptionForm: View {
 
 #Preview {
     DataPreview {
-        SubscriptionForm(subscriptionToEdit: nil)
+        SubscriptionForm()
     }
 }
