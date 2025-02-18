@@ -73,11 +73,26 @@ class SubscriptionsViewModel {
     func calculateMonthlySubscriptionCost(month: Int) -> Double {
         let subscriptions = getSubscriptions()
         
-        let filtered = subscriptions.filter({ sub in
-            Calendar.current.component(.month, from: sub.date) == month
-        })
+        var start = DateComponents()
+        start.year = Calendar.current.component(.year, from: Date())
+        start.month = month
+        start.day = 1
         
-        return filtered.reduce(0) { $0 + $1.price }
+        var end = DateComponents()
+        end.year = Calendar.current.component(.year, from: Date())
+        end.month = month + 1
+        end.day = 1
+        
+        let visibleRange = DateInterval(start: Calendar.current.date(from: start)!, end: Calendar.current.date(from: end)!)
+        
+        var totalAmount: Double = 0
+        
+        for subscription in subscriptions {
+            let subscriptionDates = getSubscriptionDates(subscription: subscription, visibleRange: visibleRange)
+            totalAmount += subscription.price * Double(subscriptionDates.count)
+        }
+        
+        return totalAmount
     }
     
     func deleteSubscription(_ subscription: Subscription) {
@@ -100,13 +115,10 @@ class SubscriptionsViewModel {
             switch subscription.type.value {
                 
             case "Weekly":
-                print("weekly")
                 currentDate = calendar.date(byAdding: .weekOfYear, value: 1, to: currentDate) ?? currentDate
             case "Monthly":
-                print("monthly")
                 currentDate = calendar.date(byAdding: .month, value: 1, to: currentDate) ?? currentDate
             case "Yearly":
-                print("yearly")
                 currentDate = calendar.date(byAdding: .year, value: 1, to: currentDate) ?? currentDate
             default:
                 currentDate = calendar.date(byAdding: .month, value: 3, to: currentDate) ?? currentDate
