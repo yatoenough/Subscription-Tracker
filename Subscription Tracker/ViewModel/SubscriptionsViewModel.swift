@@ -70,16 +70,16 @@ class SubscriptionsViewModel {
         return subscriptions
     }
     
-    func calculateMonthlySubscriptionCost(month: Int) -> Double {
+    func calculateMonthlySubscriptionCost(month: Int, year: Int) -> Double {
         let subscriptions = getSubscriptions()
         
         var start = DateComponents()
-        start.year = Calendar.current.component(.year, from: Date())
+        start.year = year
         start.month = month
         start.day = 1
         
         var end = DateComponents()
-        end.year = Calendar.current.component(.year, from: Date())
+        end.year = year
         end.month = month + 1
         end.day = 1
         

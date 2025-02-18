@@ -15,7 +15,7 @@ struct ListScreen: View {
     @Environment(CalendarViewModel.self) private var calendarViewModel: CalendarViewModel
     
     private var monthlyTotal: Double {
-        subscriptionsViewModel.calculateMonthlySubscriptionCost(month: calendarViewModel.month)
+        subscriptionsViewModel.calculateMonthlySubscriptionCost(month: calendarViewModel.month, year: calendarViewModel.year)
     }
     
     var body: some View {
@@ -38,6 +38,7 @@ struct ListScreen: View {
         
         
     }
+    
 }
 
 #Preview {

@@ -16,7 +16,7 @@ struct CalendarScreen: View {
     private var subscriptions: [Subscription] { subscriptionsViewModel.getSubscriptions() }
     
     private var monthlyTotal: Double {
-        subscriptionsViewModel.calculateMonthlySubscriptionCost(month: calendarViewModel.month)
+        subscriptionsViewModel.calculateMonthlySubscriptionCost(month: calendarViewModel.month, year: calendarViewModel.year)
     }
     
     private var columns: [GridItem] {
