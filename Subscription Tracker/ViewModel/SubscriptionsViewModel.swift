@@ -26,36 +26,36 @@ class SubscriptionsViewModel {
     }
     
     func fetchSubscriptionById(_ id: UUID) -> Subscription? {
-            let fetchDescriptor = FetchDescriptor<Subscription>(predicate: #Predicate { subscription in
-                subscription.id == id
-            })
-            
-            var subscriptions: [Subscription] = []
-            
-            do {
-                subscriptions = try modelContext.fetch(fetchDescriptor)
-            } catch {
-                print(error.localizedDescription)
-            }
-            
-            return subscriptions.first
+        let fetchDescriptor = FetchDescriptor<Subscription>(predicate: #Predicate { subscription in
+            subscription.id == id
+        })
+        
+        var subscriptions: [Subscription] = []
+        
+        do {
+            subscriptions = try modelContext.fetch(fetchDescriptor)
+        } catch {
+            print(error.localizedDescription)
         }
         
-        func editSubscription(id: UUID, _ newSubscription: Subscription){
-            guard let subscriptionToEdit = self.fetchSubscriptionById(id) else { return }
-            
-            subscriptionToEdit.name = newSubscription.name
-            subscriptionToEdit.price = newSubscription.price
-            subscriptionToEdit.type = newSubscription.type
-            subscriptionToEdit.date = newSubscription.date
-            
-            do {
-                try modelContext.save()
-            }
-            catch {
-                print(error.localizedDescription)
-            }
+        return subscriptions.first
+    }
+    
+    func editSubscription(id: UUID, _ newSubscription: Subscription){
+        guard let subscriptionToEdit = self.fetchSubscriptionById(id) else { return }
+        
+        subscriptionToEdit.name = newSubscription.name
+        subscriptionToEdit.price = newSubscription.price
+        subscriptionToEdit.type = newSubscription.type
+        subscriptionToEdit.date = newSubscription.date
+        
+        do {
+            try modelContext.save()
         }
+        catch {
+            print(error.localizedDescription)
+        }
+    }
     
     func getSubscriptions() -> [Subscription] {
         let fetchDescriptor = FetchDescriptor<Subscription>()
@@ -82,5 +82,39 @@ class SubscriptionsViewModel {
     
     func deleteSubscription(_ subscription: Subscription) {
         modelContext.delete(subscription)
+    }
+    
+    func getSubscriptionDates(subscriptions: [Subscription], visibleRange: DateInterval) -> Set<Date> {
+        var calendar = Calendar.current
+        calendar.timeZone = TimeZone.current
+        
+        var datesSet = Set<Date>()
+        
+        for subscription in subscriptions {
+            var currentDate = subscription.date
+            
+            while currentDate <= visibleRange.end {
+                if currentDate >= visibleRange.start {
+                    datesSet.insert(calendar.startOfDay(for: currentDate))
+                }
+                
+                
+                
+                switch subscription.type {
+                    
+                case Frequency.defaultFrequencies.first(where: { $0.value == "Weekly" }):
+                    currentDate = calendar.date(byAdding: .weekOfYear, value: 1, to: currentDate) ?? currentDate
+                case Frequency.defaultFrequencies.first(where: { $0.value == "Monthly" }):
+                    currentDate = calendar.date(byAdding: .month, value: 1, to: currentDate) ?? currentDate
+                case Frequency.defaultFrequencies.first(where: { $0.value == "Yearly" }):
+                    currentDate = calendar.date(byAdding: .year, value: 1, to: currentDate) ?? currentDate
+                default :
+                    currentDate = calendar.date(byAdding: .day, value: 1, to: currentDate) ?? currentDate
+                    
+                }
+            }
+        }
+        
+        return datesSet
     }
 }

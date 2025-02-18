@@ -48,5 +48,6 @@ struct CalendarScreen: View {
 #Preview(traits: .sizeThatFitsLayout) {
     DataPreview {
         CalendarScreen()
+            .background(Color.background)
     }
 }
