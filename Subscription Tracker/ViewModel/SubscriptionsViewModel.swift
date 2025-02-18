@@ -84,35 +84,35 @@ class SubscriptionsViewModel {
         modelContext.delete(subscription)
     }
     
-    func getSubscriptionDates(subscriptions: [Subscription], visibleRange: DateInterval) -> Set<Date> {
+    func getSubscriptionDates(subscription: Subscription, visibleRange: DateInterval) -> Set<Date> {
         var calendar = Calendar.current
         calendar.timeZone = TimeZone.current
         
         var datesSet = Set<Date>()
         
-        for subscription in subscriptions {
-            var currentDate = subscription.date
-            
-            while currentDate <= visibleRange.end {
-                if currentDate >= visibleRange.start {
-                    datesSet.insert(calendar.startOfDay(for: currentDate))
-                }
-                
-                
-                
-                switch subscription.type {
-                    
-                case Frequency.defaultFrequencies.first(where: { $0.value == "Weekly" }):
-                    currentDate = calendar.date(byAdding: .weekOfYear, value: 1, to: currentDate) ?? currentDate
-                case Frequency.defaultFrequencies.first(where: { $0.value == "Monthly" }):
-                    currentDate = calendar.date(byAdding: .month, value: 1, to: currentDate) ?? currentDate
-                case Frequency.defaultFrequencies.first(where: { $0.value == "Yearly" }):
-                    currentDate = calendar.date(byAdding: .year, value: 1, to: currentDate) ?? currentDate
-                default :
-                    currentDate = calendar.date(byAdding: .day, value: 1, to: currentDate) ?? currentDate
-                    
-                }
+        var currentDate = subscription.date
+        
+        while currentDate <= visibleRange.end {
+            if currentDate >= visibleRange.start {
+                datesSet.insert(calendar.startOfDay(for: currentDate))
             }
+            
+            switch subscription.type.value {
+                
+            case "Weekly":
+                print("weekly")
+                currentDate = calendar.date(byAdding: .weekOfYear, value: 1, to: currentDate) ?? currentDate
+            case "Monthly":
+                print("monthly")
+                currentDate = calendar.date(byAdding: .month, value: 1, to: currentDate) ?? currentDate
+            case "Yearly":
+                print("yearly")
+                currentDate = calendar.date(byAdding: .year, value: 1, to: currentDate) ?? currentDate
+            default:
+                currentDate = calendar.date(byAdding: .month, value: 3, to: currentDate) ?? currentDate
+                
+            }
+            
         }
         
         return datesSet

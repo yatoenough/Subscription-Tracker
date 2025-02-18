@@ -12,7 +12,7 @@ struct CalendarView: View {
     var subscriptions: [Subscription]
     
     @Environment(CalendarViewModel.self) private var calendarViewModel: CalendarViewModel
-    
+    @Environment(SubscriptionsViewModel.self) private var subscriptionsViewModel: SubscriptionsViewModel
     
     private let daysList: [String] = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
     private let columns: [GridItem] = Array(repeating: GridItem(.flexible()), count: 7)
@@ -27,6 +27,20 @@ struct CalendarView: View {
     
     private var totalSlots: Int {
         daysInMonth + firstWeekday
+    }
+    
+    private var monthInterval: DateInterval {
+        var start = DateComponents()
+        start.year = calendarViewModel.year
+        start.month = calendarViewModel.month
+        start.day = 1
+        
+        var end = DateComponents()
+        end.year = calendarViewModel.year
+        end.month = calendarViewModel.month + 1
+        end.day = 1
+
+        return DateInterval(start: Calendar.current.date(from: start)!, end: Calendar.current.date(from: end)!)
     }
     
     var body: some View {
@@ -51,7 +65,7 @@ struct CalendarView: View {
                         let dayNumber = index - firstWeekday + 1
                         
                         let filteredSubscriptions: [Subscription] = subscriptions.filter({ subscription in
-                            Calendar.current.component(.day, from: subscription.date) == dayNumber
+                            isSubscriptionAppearingOnDay(subscription: subscription, day: dayNumber)
                         })
                         
                         NavigationLink(
@@ -66,6 +80,13 @@ struct CalendarView: View {
                 }
             }
         }
+    }
+    
+    private func isSubscriptionAppearingOnDay(subscription: Subscription, day: Int) -> Bool {
+        let subscriptionDates = subscriptionsViewModel.getSubscriptionDates(subscription: subscription, visibleRange: monthInterval)
+        let daysOfDates = subscriptionDates.map({ Calendar.current.component(.day, from: $0) })
+        
+        return daysOfDates.contains(day)
     }
 }
 
