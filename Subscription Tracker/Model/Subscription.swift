@@ -15,6 +15,7 @@ class Subscription {
     var price: Double
     var type: Frequency
     var date: Date
+    var notificationIdentifier: String { "\(id)" }
     
     init(name: String, price: Double, type: Frequency, date: Date) {
         self.name = name

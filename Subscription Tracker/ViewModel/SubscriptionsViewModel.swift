@@ -23,6 +23,30 @@ class SubscriptionsViewModel {
         } catch {
             print("Failed to save subscription: \(error.localizedDescription)")
         }
+        
+        var notificationFrequency: NotificationFrequency = .monthly
+        
+        switch subscription.type.value {
+        case "Monthly":
+            notificationFrequency = .monthly
+        case "Weekly":
+            notificationFrequency = .weekly
+        case "Daily":
+            notificationFrequency = .daily
+        case "Yearly":
+            notificationFrequency = .yearly
+        default:
+            break
+        }
+        
+        NotificationManager.instance.scheduleNotification(
+            frequency: notificationFrequency,
+            identifier: subscription.notificationIdentifier,
+            title: "\(subscription.name) subscription",
+            body: "Your subscription is due tomorrow!",
+            date: Calendar.current.date(byAdding: .day, value: -1, to: subscription.date)!,
+            repeats: true
+        )
     }
     
     func fetchSubscriptionById(_ id: UUID) -> Subscription? {
@@ -55,6 +79,30 @@ class SubscriptionsViewModel {
         catch {
             print(error.localizedDescription)
         }
+        
+        var notificationFrequency: NotificationFrequency = .monthly
+        
+        switch subscriptionToEdit.type.value {
+        case "Monthly":
+            notificationFrequency = .monthly
+        case "Weekly":
+            notificationFrequency = .weekly
+        case "Daily":
+            notificationFrequency = .daily
+        case "Yearly":
+            notificationFrequency = .yearly
+        default:
+            break
+        }
+        
+        NotificationManager.instance.scheduleNotification(
+            frequency: notificationFrequency,
+            identifier: subscriptionToEdit.notificationIdentifier,
+            title: "\(subscriptionToEdit.name) subscription",
+            body: "Your subscription is due tomorrow!",
+            date: Calendar.current.date(byAdding: .day, value: -1, to: subscriptionToEdit.date)!,
+            repeats: true
+        )
     }
     
     func getSubscriptions() -> [Subscription] {
@@ -96,6 +144,7 @@ class SubscriptionsViewModel {
     }
     
     func deleteSubscription(_ subscription: Subscription) {
+        NotificationManager.instance.deleteNotification(identifier: subscription.notificationIdentifier)
         modelContext.delete(subscription)
     }
     

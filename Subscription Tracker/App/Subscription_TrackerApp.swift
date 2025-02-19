@@ -44,7 +44,6 @@ struct Subscription_TrackerApp: App {
             }.preferredColorScheme(.dark)
                 .onAppear {
                     NotificationManager.instance.requestAuthorization()
-                    NotificationManager.instance.scheduleNotification(identifier: UUID().uuidString, title: "Hello", body: "Demo")
                 }
         }
         .modelContainer(container)

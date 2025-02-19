@@ -7,6 +7,13 @@
 
 import UserNotifications
 
+enum NotificationFrequency {
+    case weekly
+    case monthly
+    case yearly
+    case daily
+}
+
 class NotificationManager {
     static let instance = NotificationManager()
     
@@ -24,15 +31,42 @@ class NotificationManager {
         }
     }
     
-    func scheduleNotification(identifier: String, title: String, body: String) {
+    func scheduleNotification(frequency: NotificationFrequency, identifier: String, title: String, body: String, date: Date, repeats: Bool) {
         let content = UNMutableNotificationContent()
         content.title = title
         content.body = body
         content.sound = .default
         content.badge = 1
         
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+        var components: Set<Calendar.Component> = []
+        
+        switch frequency {
+        case .weekly:
+            components = [.weekday]
+            break
+        case .monthly:
+            components = [.day]
+            break
+        case .yearly:
+            components = [.month, .day]
+            break
+        case .daily:
+            components = [.hour, .minute]
+            break
+        }
+        
+        var triggerDateComponents = Calendar.current.dateComponents(components, from: date)
+        
+        triggerDateComponents.hour = 12
+        triggerDateComponents.minute = 0
+        triggerDateComponents.second = 0
+        
+        let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDateComponents, repeats: repeats)
         
         UNUserNotificationCenter.current().add(UNNotificationRequest(identifier: identifier, content: content, trigger: trigger))
+    }
+    
+    func deleteNotification(identifier: String) {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
     }
 }
