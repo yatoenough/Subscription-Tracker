@@ -65,7 +65,7 @@ class SubscriptionsViewModel {
         return subscriptions.first
     }
     
-    func editSubscription(id: UUID, _ newSubscription: Subscription){
+    func editSubscription(id: UUID, _ newSubscription: Subscription) {
         guard let subscriptionToEdit = self.fetchSubscriptionById(id) else { return }
         
         subscriptionToEdit.name = newSubscription.name
@@ -75,8 +75,7 @@ class SubscriptionsViewModel {
         
         do {
             try modelContext.save()
-        }
-        catch {
+        } catch {
             print(error.localizedDescription)
         }
         

@@ -1,5 +1,5 @@
 //
-//  Subscription_TrackerApp.swift
+//  SubscriptionTrackerApp.swift
 //  Subscription Tracker
 //
 //  Created by Nikita Shyshkin on 28/11/2024.
@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 @main
-struct Subscription_TrackerApp: App {
+struct SubscriptionTrackerApp: App {
     private let container: ModelContainer
     
     init() {

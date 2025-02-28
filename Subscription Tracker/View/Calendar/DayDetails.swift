@@ -14,7 +14,7 @@ struct DayDetails: View {
     @Environment(SubscriptionsViewModel.self) private var subscriptionsViewModel
     @Environment(CalendarViewModel.self) private var calendarViewModel
     
-    @State private var subscriptionToEdit: Subscription? = nil
+    @State private var subscriptionToEdit: Subscription?
     
     init(date: Date, subscriptions: [Subscription]) {
         self.date = date
@@ -44,7 +44,6 @@ struct DayDetails: View {
                 .listRowBackground(Color.clear)
                 .listRowSeparator(.hidden)
             
-            
         }
         .sheet(item: $subscriptionToEdit, content: { subscriptionToEdit in
             SubscriptionForm(subscriptionToEdit: subscriptionToEdit)
@@ -62,8 +61,8 @@ struct DayDetails: View {
 #Preview {
     DataPreview {
         DayDetails(date: .now, subscriptions: [
-            Subscription(name: "Test", price: 100, type:  Frequency(value: "Monthly", colorHex: Color.green.toHex()!), date: .now),
-            Subscription(name: "Test", price: 100, type:  Frequency(value: "Monthly", colorHex: Color.green.toHex()!), date: .now)
+            Subscription(name: "Test", price: 100, type: Frequency(value: "Monthly", colorHex: Color.green.toHex()!), date: .now),
+            Subscription(name: "Test", price: 100, type: Frequency(value: "Monthly", colorHex: Color.green.toHex()!), date: .now)
         ])
     }
 }

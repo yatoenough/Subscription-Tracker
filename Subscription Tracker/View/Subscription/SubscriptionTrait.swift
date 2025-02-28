@@ -22,7 +22,6 @@ struct SubscriptionTrait: View {
     }
 }
 
-
 #Preview(traits: .sizeThatFitsLayout) {
     SubscriptionTrait(color: .purple, text: "Text")
 }

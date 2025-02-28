@@ -22,7 +22,7 @@ class NotificationManager {
     func requestAuthorization() {
         let options: UNAuthorizationOptions = [.alert, .badge, .sound]
         
-        UNUserNotificationCenter.current().requestAuthorization(options: options) { success, error in
+        UNUserNotificationCenter.current().requestAuthorization(options: options) { _, error in
             if let error {
                 print("Error requesting authorization: \(error)")
             } else {
@@ -43,16 +43,12 @@ class NotificationManager {
         switch frequency {
         case .weekly:
             components = [.weekday]
-            break
         case .monthly:
             components = [.day]
-            break
         case .yearly:
             components = [.month, .day]
-            break
         case .daily:
             components = [.hour, .minute]
-            break
         }
         
         var triggerDateComponents = Calendar.current.dateComponents(components, from: date)

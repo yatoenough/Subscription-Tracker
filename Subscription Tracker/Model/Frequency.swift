@@ -27,7 +27,7 @@ class Frequency {
         Frequency(value: "Yearly", colorHex: Color.purple.toHex()!),
         Frequency(value: "Monthly", colorHex: Color.green.toHex()!),
         Frequency(value: "Weekly", colorHex: Color.blue.toHex()!),
-        Frequency(value: "Quarterly", colorHex: Color.orange.toHex()!),
+        Frequency(value: "Quarterly", colorHex: Color.orange.toHex()!)
     ]
     
 }

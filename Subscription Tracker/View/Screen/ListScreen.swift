@@ -36,7 +36,6 @@ struct ListScreen: View {
         .padding()
         .background(Color.background)
         
-        
     }
     
 }
